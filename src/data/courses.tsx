@@ -1,5 +1,4 @@
-import React from 'react';
-import { v4 as uuid } from 'uuid';
+import { storage } from '../component/Utilities';
 
 // Local storage entries
 const PROGRESS = 'progress';
@@ -229,6 +228,7 @@ export function getCourseIndex(id: string) {
 export interface ITest {
    id: string;
    category: string;
+   topics: string[];
    name: string;
    title: string;
    description: string;
@@ -247,9 +247,11 @@ export const tests = [
    {
       id: 'variables-types',
       category: 'Type',
+      topics: ['primitive-types'],
       name: 'Variables declaration',
       title: 'Variables declaration',
-      description: '',
+      description:
+         'This practice test focus on variable declaration and primitive types.',
       questions: [
          {
             question:
@@ -303,10 +305,10 @@ export const tests = [
             question: 'Which variable declaration is correct for type double?',
             description: '',
             options: [
-               "float coinValue = '0.00005649';",
-               'float coinValue = 0.00005649i;',
-               'float coinValue = 0.00005649f;',
-               'float coinValue = 0.00005649d;',
+               "double coinValue = '0.00005649';",
+               'double coinValue = 0.00005649i;',
+               'double coinValue = 0.00005649f;',
+               'double coinValue = 0.00005649d;',
             ],
             answer: 3,
          },
@@ -349,9 +351,10 @@ export const tests = [
    {
       id: 'operators-usage',
       category: 'Operators',
+      topics: ['math-operators', 'condition-operators'],
       name: 'Operators',
       title: 'Operators',
-      description: '',
+      description: 'This practice test focus on math and condition operators.',
       questions: [
          {
             question: 'Which statement will increase x by 5?',
@@ -458,7 +461,7 @@ export interface IScore {
 }
 
 export function initProgress() {
-   const rawProgress = window.localStorage.getItem(PROGRESS);
+   const rawProgress = storage.get(PROGRESS);
    if (rawProgress) {
       const progress = JSON.parse(rawProgress);
       const fillerProgress = courses.map((course: ICourse) => {
@@ -474,7 +477,7 @@ export function initProgress() {
          }
       });
       const newProgress = [...progress, ...fillerProgress];
-      window.localStorage.setItem(PROGRESS, JSON.stringify(newProgress));
+      storage.set(PROGRESS, JSON.stringify(newProgress));
    } else {
       const newProgress = courses.map((course: ICourse) => {
          return {
@@ -483,27 +486,24 @@ export function initProgress() {
             value: 0,
          };
       });
-      window.localStorage.setItem(PROGRESS, JSON.stringify(newProgress));
+      storage.set(PROGRESS, JSON.stringify(newProgress));
    }
 }
 
 export function updateScore(newScore: IScore) {
-   const rawProgress = window.localStorage.getItem(PROGRESS);
+   const rawProgress = storage.get(PROGRESS);
    if (rawProgress) {
       const progress = JSON.parse(rawProgress).filter((score: IScore) => {
          return score.id != newScore.id;
       });
-      window.localStorage.setItem(
-         PROGRESS,
-         JSON.stringify([...progress, newScore]),
-      );
+      storage.set(PROGRESS, JSON.stringify([...progress, newScore]));
    } else {
-      window.localStorage.setItem(PROGRESS, JSON.stringify([newScore]));
+      storage.set(PROGRESS, JSON.stringify([newScore]));
    }
 }
 
 export function getProgress(): IScore[] {
-   const data = window.localStorage.getItem(PROGRESS);
+   const data = storage.get(PROGRESS);
    return data ? JSON.parse(data) : [];
 }
 
@@ -537,28 +537,12 @@ export function getProgressSummery(): IScoreSummery[] {
       return { category: item.category, score: avgScore };
    });
 
-   const sortedSummery = avgSummery.sort((x, y) =>
-      x.category.localeCompare(y.category),
-   );
-
    let overall = 0;
-   sortedSummery.forEach((item) => {
+   avgSummery.forEach((item) => {
       overall += item.score;
    });
 
-   overall = overall / sortedSummery.length;
+   overall = overall / avgSummery.length;
 
-   return [{ category: 'Overall', score: overall }, ...sortedSummery];
-}
-
-export function textToParagraph(text: string): React.ReactElement[] {
-   const lines = text.split('\n');
-   return lines.map((line) => {
-      return (
-         <span key={uuid()}>
-            {line}
-            <br />
-         </span>
-      );
-   });
+   return [{ category: 'Overall', score: overall }, ...avgSummery];
 }

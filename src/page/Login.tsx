@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
+
 import { Container, Form, Button } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUserCircle } from '@fortawesome/free-solid-svg-icons';
 
 interface ILoginProps {
-   onLogin: (user: string) => void;
+   onLogin: (username: string) => void;
 }
 
 function Login({ onLogin }: ILoginProps): React.ReactElement {
@@ -22,24 +23,32 @@ function Login({ onLogin }: ILoginProps): React.ReactElement {
    }
 
    return (
-      <Container
-         className="register-container m-auto p-4 rounded text-center bg-light"
-         style={{ width: '20em' }}
-      >
-         <FontAwesomeIcon icon={faUserCircle} size="10x" className="m-2" />
-         <Form onSubmit={handleRegister} className="m-2 d-grid gap-2">
-            <Form.Group>
-               <Form.Control
-                  type="text"
-                  placeholder="What are we going to call you?"
-                  value={inputName}
-                  onChange={(event) => setInputName(event.currentTarget.value)}
-               />
-            </Form.Group>
-            <Button variant="primary" type="submit">
-               Save
-            </Button>
-         </Form>
+      <Container className="my-5 text-center">
+         <div className="my-5 py-5">
+            <h1 className="display-4">Welcome to Homework!</h1>
+            <h4>Lets get started.</h4>
+         </div>
+         <div
+            className="bg-light rounded p-2 d-inline-block"
+            style={{ width: '25em' }}
+         >
+            <FontAwesomeIcon icon={faUserCircle} size="10x" className="my-4" />
+            <Form onSubmit={handleRegister} className="m-2 d-grid gap-2 ">
+               <Form.Group>
+                  <Form.Control
+                     type="text"
+                     placeholder="What are we going to call you?"
+                     value={inputName}
+                     onChange={(event) =>
+                        setInputName(event.currentTarget.value)
+                     }
+                  />
+               </Form.Group>
+               <Button variant="primary" type="submit">
+                  Start learning
+               </Button>
+            </Form>
+         </div>
       </Container>
    );
 }

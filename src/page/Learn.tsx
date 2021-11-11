@@ -1,17 +1,25 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Navigate, useParams } from 'react-router';
 import { v4 as uuid } from 'uuid';
-import {
-   courses,
-   getCourseIndex,
-   ICourseSection,
-   textToParagraph,
-} from '../data/courses';
+
+import { courses, getCourseIndex, ICourseSection } from '../data/courses';
+
 import ScoreMeter from '../component/ScoreMeter';
+
+import { text } from '../component/Utilities';
+
 import { Container } from 'react-bootstrap';
+import SyntaxHighlighter from 'highlight.js/lib/core';
+import csharp from 'highlight.js/lib/languages/csharp';
+import 'highlight.js/styles/github.css';
 
 function Learn(): React.ReactElement {
    const params = useParams();
+
+   useEffect(() => {
+      SyntaxHighlighter.registerLanguage('cs', csharp);
+      SyntaxHighlighter.highlightAll();
+   }, [params]);
 
    if (params.id) {
       const courseIndex = getCourseIndex(params.id);
@@ -19,17 +27,19 @@ function Learn(): React.ReactElement {
          return (
             <Container className="py-4" key={uuid()}>
                <h1 className="display-4">{courses[courseIndex].title}</h1>
-               <p>{textToParagraph(courses[courseIndex].description)}</p>
+               <p>{text.toParagraph(courses[courseIndex].description)}</p>
                {courses[courseIndex].sections.map((section: ICourseSection) => {
                   return (
                      <section key={uuid()}>
                         <hr />
                         <h4>{section.title}</h4>
-                        <p>{textToParagraph(section.description)}</p>
+                        <p>{text.toParagraph(section.description)}</p>
 
                         {section.example ? (
                            <pre>
-                              <code>{textToParagraph(section.example)}</code>
+                              <code className="bg-light rounded p-2 language-cs">
+                                 {section.example}
+                              </code>
                            </pre>
                         ) : (
                            ''
@@ -47,7 +57,7 @@ function Learn(): React.ReactElement {
          );
       }
    }
-   return <Navigate to="/homework/error" />;
+   return <Navigate to="/" />;
 }
 
 export default Learn;

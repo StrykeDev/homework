@@ -1,66 +1,84 @@
 import React, { useState, useEffect, createContext } from 'react';
 import { Navigate, Route, Routes } from 'react-router';
+
 import { initProgress } from '../data/courses';
+
+import { storage } from '../component/Utilities';
+
 import MainNavbar from '../component/MainNavbar';
+import Footer from '../component/Footer';
+
 import Login from '../page/Login';
 import Home from '../page/Home';
 import Learn from '../page/Learn';
 import Practice from '../page/Practice';
 import Error from '../page/Error';
+
 import './App.css';
+
+export const ID = 'com.homework.app';
+export const VERSION = '0.1.1';
+export const CONTENT = '0.1.1';
+export const INDEX = '/homework';
 
 export const userContext = createContext<string>('');
 
 // Local storage entries
-const APP_ID = 'com.c-sharp.app';
-const APP_VER = '0.1.0';
-const USER = 'user';
+const APP_VER = 'version';
+const CONTENT_VER = 'content';
+const USERNAME = 'username';
 
 function App(): React.ReactElement {
-   const [user, setUser] = useState<string>(
-      window.localStorage.getItem(USER) || '',
-   );
+   const [username, setUser] = useState<string>(storage.get(USERNAME));
 
    useEffect((): void => {
-      if (window.localStorage.getItem('app_id') !== APP_ID) {
-         window.localStorage.clear();
-         window.localStorage.setItem('app_id', APP_ID);
-         window.localStorage.setItem('app_ver', APP_VER);
-         initProgress();
-         setUser('');
-      } else if (window.localStorage.getItem('app_ver') !== APP_VER) {
-         window.localStorage.setItem('app_ver', APP_VER);
+      if (storage.get(APP_VER) != VERSION) {
+         storage.set(APP_VER, VERSION);
+      }
+
+      if (storage.get(CONTENT_VER) != CONTENT) {
+         storage.set(CONTENT_VER, CONTENT);
          initProgress();
       }
-   }, [user]);
+   }, []);
 
-   function handleLogin(newUser: string): void {
-      if (newUser && newUser !== user) {
-         window.localStorage.setItem(USER, newUser);
-         setUser(newUser);
+   function handleLogin(newUsername: string): void {
+      if (newUsername && newUsername !== username) {
+         storage.set(USERNAME, newUsername);
+         setUser(newUsername);
       }
    }
 
-   function renderApp(): React.ReactElement {
+   if (username) {
       return (
-         <userContext.Provider value={user}>
-            <MainNavbar />
-            <Routes>
-               <Route path="/homework/learn/:id" element={<Learn />} />
-               <Route path="/homework/practice/:id" element={<Practice />} />
-               <Route path="/homework" element={<Home />} />
-               <Route path="/homework/error" element={<Error />} />
-               <Route path="*" element={<Navigate to="/homework/error" />} />
-            </Routes>
-         </userContext.Provider>
+         <div className="app">
+            <userContext.Provider value={username}>
+               <MainNavbar />
+               <Routes>
+                  <Route path={INDEX + '/learn/:id'} element={<Learn />} />
+                  <Route
+                     path={INDEX + '/practice/:id'}
+                     element={<Practice />}
+                  />
+                  <Route path={INDEX} element={<Home />} />
+                  <Route path={INDEX + '/error'} element={<Error />} />
+                  <Route
+                     path="*"
+                     element={<Navigate to={INDEX + '/error'} />}
+                  />
+               </Routes>
+               <Footer />
+            </userContext.Provider>
+         </div>
+      );
+   } else {
+      return (
+         <div className="app">
+            <Login onLogin={handleLogin} />
+            <Footer />
+         </div>
       );
    }
-
-   return (
-      <div className="app">
-         {user ? renderApp() : <Login onLogin={handleLogin} />}
-      </div>
-   );
 }
 
 export default App;

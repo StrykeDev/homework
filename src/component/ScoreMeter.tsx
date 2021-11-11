@@ -1,6 +1,8 @@
 import React from 'react';
 import { v4 as uuid } from 'uuid';
+
 import { courses, updateScore } from '../data/courses';
+
 import { Form, Button } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';

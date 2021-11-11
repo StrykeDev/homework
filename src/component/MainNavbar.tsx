@@ -1,16 +1,20 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { v4 as uuid } from 'uuid';
+
 import { courses, ICourse, ITest, tests } from '../data/courses';
+
+import { INDEX } from '../App';
+
 import { Navbar, Container, Nav, NavDropdown } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faGraduationCap } from '@fortawesome/free-solid-svg-icons';
 
 function MainNavbar(): React.ReactElement {
    return (
-      <Navbar bg="light" expand="md">
+      <Navbar bg="light" expand="md" style={{ gridRow: 0 }}>
          <Container>
-            <Navbar.Brand as={Link} to="/homework/">
+            <Navbar.Brand as={Link} to={INDEX}>
                <h2 className="d-inline">
                   <FontAwesomeIcon icon={faGraduationCap} /> Homework
                </h2>
@@ -25,7 +29,7 @@ function MainNavbar(): React.ReactElement {
                            <NavDropdown.Item
                               key={uuid()}
                               as={Link}
-                              to={'/homework/learn/' + course.id}
+                              to={INDEX + '/learn/' + course.id}
                            >
                               {course.name}
                            </NavDropdown.Item>
@@ -38,7 +42,7 @@ function MainNavbar(): React.ReactElement {
                            <NavDropdown.Item
                               key={uuid()}
                               as={Link}
-                              to={'/homework/practice/' + test.id}
+                              to={INDEX + '/practice/' + test.id}
                            >
                               {test.name}
                            </NavDropdown.Item>

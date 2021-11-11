@@ -1,12 +1,16 @@
-* {
-   outline: none !important;
-   text-overflow: ellipsis;
-}
-
 .app {
-   display: flex;
-   flex-direction: column;
-   overflow: auto scroll;
+   display: grid;
+   grid-template-rows: auto 1fr auto;
+   overflow-y: scroll;
    width: 100vw;
    height: 100vh;
+   scroll-behavior: smooth;
+}
+
+a {
+   text-decoration: none !important;
+}
+
+hr {
+   margin: 4em 0 !important;
 }

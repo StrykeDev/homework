@@ -121,7 +121,7 @@ export const courses = [
             
             Note: They will always add 1 even if the variable type is float or double.
 
-            Note: The can be chained but it's highly not recommended, you should use setter math operators instead.`,
+            Note: They can be chained but it's highly not recommended, you should use setter math operators instead.`,
             example: `// Usage
    int x = 0;
    int result = 0;
@@ -139,8 +139,8 @@ export const courses = [
    myFloat++\t\t// myFloat = 1.0f
 
 // Chaining
-   y = x++++\t\t// y = 0, x = 2, Use x+=2 instead!
-   y = x++++++\t\t// y = 0, x = 3, Use x+=3 instead!`,
+   result = x++++\t\t// result = 0, x = 2, Use x+=2 instead!
+   result = ++++++x\t\t// result = 3, x = 3, Use x+=3 instead!`,
          },
       ],
    },
@@ -149,7 +149,7 @@ export const courses = [
       category: 'Operators',
       name: 'Condition operators',
       title: 'Condition operators',
-      description: `Condition operators the values and return a bool.`,
+      description: `Condition operators test the values and return a bool.`,
       sections: [
          {
             title: 'Basic condition operators',
@@ -427,10 +427,10 @@ export const tests = [
             question: 'Which statement is true?',
             description: '',
             options: [
-               'true && false;',
-               'false || false;',
-               'true ^^ true;',
-               '!false;',
+               'true && false',
+               'false || false',
+               'true ^^ true',
+               '!false',
             ],
             answer: 3,
          },
@@ -444,6 +444,104 @@ export const tests = [
                'false == !false',
             ],
             answer: 2,
+         },
+      ],
+   },
+   {
+      id: 'adv-operators-usage',
+      category: 'Operators',
+      topics: ['condition-operators'],
+      name: 'Advanced operators',
+      title: 'Advanced operators',
+      description: 'This practice test focus on condition operators.',
+      questions: [
+         {
+            question: 'Which statement is true?',
+            description: '',
+            options: [
+               '(10 > 10) && (10 < 10)',
+               '(10 > 10) || (10 < 10)',
+               '(10 >= 10) == (10 <= 10)',
+               '(10 >= 10) != (10 <= 10)',
+            ],
+            answer: 2,
+         },
+         {
+            question: 'Which statement is true?',
+            description: '',
+            options: [
+               '(!true) && (10 < 10)',
+               '(10 > 10) || (!false)',
+               '(!true) == (10 <= 10)',
+               '(10 >= 10) != (!true)',
+            ],
+            answer: 1,
+         },
+         {
+            question: 'Which statement is true?',
+            description: '',
+            options: [
+               'true && false && true && false',
+               'true || false || true || false',
+               'true == false == true == false',
+               'true == false != true == false',
+            ],
+            answer: 1,
+         },
+         {
+            question: 'Which statement is true?',
+            description: '',
+            options: [
+               '(true != true) && (true == false)',
+               '(true != true) || (true == false)',
+               '(true != true) == (true == false)',
+               '(true != true) != (true == false)',
+            ],
+            answer: 2,
+         },
+         {
+            question: 'Which statement is false?',
+            description: '',
+            options: [
+               '(true == true) && (true != false)',
+               '(true != true) || (true != false)',
+               '(!true != true) == (true == !false)',
+               '(true == true) != (true == !false)',
+            ],
+            answer: 3,
+         },
+         {
+            question: 'Which statement is false?',
+            description: '',
+            options: [
+               '(true || true) && (true ^^ false)',
+               '(true && true) || (true || false)',
+               '(true ^^ true) ^^ (true == false)',
+               '(true == true) != (true && false)',
+            ],
+            answer: 2,
+         },
+         {
+            question: 'Which statement is false?',
+            description: '',
+            options: [
+               '(true ^^ !true) && (true == !false)',
+               '(true == !true) || (true && !false)',
+               '(true && !true) ^^ (true || !false)',
+               '(true || !true) == (true ^^ !false)',
+            ],
+            answer: 3,
+         },
+         {
+            question: 'Which statement is false?',
+            description: '',
+            options: [
+               '(true || true) && !(true || true)',
+               '!(true ^^ true) || (true ^^ false)',
+               '(true && true) ^^ !(true || false)',
+               '!(true || true) == (true && false)',
+            ],
+            answer: 0,
          },
       ],
    },

@@ -17,9 +17,9 @@ import Error from '../page/Error';
 import './App.css';
 
 export const ID = 'com.homework.app';
-export const VERSION = '0.1.1';
+export const VERSION = '0.1.2';
 export const CONTENT = '0.1.2';
-export const INDEX = '/homework';
+export const INDEX = '/homework/net';
 
 export const userContext = createContext<string>('');
 

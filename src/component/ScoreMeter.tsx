@@ -48,8 +48,17 @@ function ScoreMeter({ courseIndex }: IScoreMeterProps): React.ReactElement {
    }
 
    return (
-      <Form>
+      <Form className="text-center">
+         <h4>How are we doing?</h4>
          <Form.Group className="d-inline-flex">{renderButtons()}</Form.Group>
+         <p className="text-muted pt-2">
+            Select how you feel about this subject to track your progress.
+            <br />
+            <sub>
+               The score will be set again after completing a test on this
+               subject.
+            </sub>
+         </p>
       </Form>
    );
 }

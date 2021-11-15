@@ -36,8 +36,11 @@ function Learn(): React.ReactElement {
                         <p>{text.toParagraph(section.description)}</p>
 
                         {section.example ? (
-                           <pre>
-                              <code className="bg-light rounded p-2 language-cs">
+                           <pre
+                              className="language-cs"
+                              style={{ maxWidth: '95vw' }}
+                           >
+                              <code className="bg-light rounded p-2">
                                  {section.example}
                               </code>
                            </pre>
@@ -49,8 +52,7 @@ function Learn(): React.ReactElement {
                })}
 
                <hr />
-               <div className="py-4 text-center">
-                  <h4>How are we doing?</h4>
+               <div className="py-4">
                   <ScoreMeter courseIndex={courseIndex} />
                </div>
             </Container>

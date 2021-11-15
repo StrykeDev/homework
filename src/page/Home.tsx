@@ -33,12 +33,14 @@ function Home(): React.ReactElement {
       content: React.ReactElement,
    ): React.ReactElement {
       return (
-         <div className="bg-light col-lg rounded m-3">
-            <div className="text-center pb-2 pt-4">
-               <FontAwesomeIcon icon={icon} size="3x" className="m-2" />
-               <h5>{title}</h5>
+         <div className="col-lg p-2">
+            <div className="bg-light rounded p-2">
+               <div className="py-2 d-flex align-items-center justify-content-center">
+                  <FontAwesomeIcon icon={icon} size="3x" className="m-2" />
+                  <h5>{title}</h5>
+               </div>
+               {content}
             </div>
-            {content}
          </div>
       );
    }
@@ -68,16 +70,18 @@ function Home(): React.ReactElement {
    return (
       <Container>
          {/* Header */}
-         <div className="text-center px-2 p-5">
-            <h1 className="display-4">Hi {user}</h1>
-            <h4>What are we doing today?</h4>
+         <div className="py-5 text-center">
+            <span>
+               <h1 className="display-4">Hi {user}</h1>
+               <h4>What are we doing today?</h4>
+            </span>
          </div>
 
          <div className="row">
             {renderPanel(
                faChalkboardTeacher,
                'Progress',
-               <ListGroup className="pb-2">
+               <ListGroup>
                   {getProgressSummery().map((item: IScoreSummery) => {
                      return renderListItem(
                         item.category,
@@ -91,7 +95,7 @@ function Home(): React.ReactElement {
             {renderPanel(
                faBookReader,
                'Learn',
-               <ListGroup className="pb-2">
+               <ListGroup>
                   {courses.map((course: ICourse) => {
                      return renderListItem(
                         course.name,
@@ -104,7 +108,7 @@ function Home(): React.ReactElement {
             {renderPanel(
                faUserEdit,
                'Practice',
-               <ListGroup className="pb-2">
+               <ListGroup>
                   {tests.map((test: ITest) => {
                      return renderListItem(
                         test.name,

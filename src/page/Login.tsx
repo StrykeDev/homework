@@ -29,8 +29,8 @@ function Login({ onLogin }: ILoginProps): React.ReactElement {
             <h4>Lets get started.</h4>
          </div>
          <div
-            className="bg-light rounded p-2 d-inline-block"
-            style={{ width: '25em' }}
+            className="bg-light rounded p-2 d-inline-block w-100"
+            style={{ maxWidth: '25em' }}
          >
             <FontAwesomeIcon icon={faUserCircle} size="10x" className="my-4" />
             <Form onSubmit={handleRegister} className="m-2 d-grid gap-2 ">

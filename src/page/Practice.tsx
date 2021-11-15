@@ -117,7 +117,11 @@ function Practice(): React.ReactElement {
             event.target[key][value].classList.add('bg-success');
          } else {
             event.target[key].forEach((element: any) => {
-               element.classList.add('bg-danger');
+               if (element.value == value) {
+                  element.classList.add('bg-success');
+               } else {
+                  element.classList.add('bg-danger');
+               }
             });
          }
       });
@@ -152,6 +156,7 @@ function Practice(): React.ReactElement {
                                     return (
                                        <Form.Check
                                           key={key + oIndex}
+                                          id={key + oIndex}
                                           name={key}
                                           type="radio"
                                           value={oIndex}

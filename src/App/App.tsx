@@ -1,11 +1,10 @@
 import React, { useState, useEffect, createContext } from 'react';
 import { Navigate, Route, Routes } from 'react-router';
 
-import { initProgress } from '../data/courses';
+import { initProgress } from '../data/progress';
 
 import { storage } from '../component/Utilities';
-
-import MainNavbar from '../component/MainNavbar';
+import MainNav from '../component/MainNav';
 import Footer from '../component/Footer';
 
 import Login from '../page/Login';
@@ -17,9 +16,10 @@ import Error from '../page/Error';
 import './App.css';
 
 export const ID = 'com.homework.app';
-export const VERSION = '0.1.2';
-export const CONTENT = '0.1.2';
+export const VERSION = '0.2.0';
+export const CONTENT = '0.2.0';
 export const INDEX = '/homework/net';
+export const ERROR = INDEX + '/error';
 
 export const userContext = createContext<string>('');
 
@@ -53,7 +53,9 @@ function App(): React.ReactElement {
       return (
          <div className="app">
             <userContext.Provider value={username}>
-               <MainNavbar />
+               <div>
+                  <MainNav />
+               </div>
                <Routes>
                   <Route path={INDEX + '/learn/:id'} element={<Learn />} />
                   <Route
@@ -62,10 +64,8 @@ function App(): React.ReactElement {
                   />
                   <Route path={INDEX} element={<Home />} />
                   <Route path={INDEX + '/error'} element={<Error />} />
-                  <Route
-                     path="*"
-                     element={<Navigate to={INDEX + '/error'} />}
-                  />
+                  <Route path="/" element={<Navigate to={INDEX} />} />
+                  <Route path="*" element={<Navigate to={ERROR} />} />
                </Routes>
                <Footer />
             </userContext.Provider>

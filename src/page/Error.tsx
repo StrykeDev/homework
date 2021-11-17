@@ -1,27 +1,21 @@
 import React from 'react';
 import { useNavigate } from 'react-router';
 
-import { INDEX } from '../App/App';
-
-import { Container, Button } from 'react-bootstrap';
+import { INDEX } from '../App';
 
 function Error(): React.ReactElement {
    const navigator = useNavigate();
 
    return (
-      <Container className="my-5 text-center">
-         <div className="py-5">
-            <h1 className="display-4">Oops!</h1>
+      <div className="dialog text-center">
+         <div className="my-4 py-4">
+            <h1>Oops!</h1>
             <h4>Something went wrong!</h4>
-            <Button
-               className="mt-4"
-               variant="outline-primary"
-               onClick={() => navigator(INDEX)}
-            >
+            <button className="btn m-1" onClick={() => navigator(INDEX)}>
                Go back to safety
-            </Button>
+            </button>
          </div>
-      </Container>
+      </div>
    );
 }
 

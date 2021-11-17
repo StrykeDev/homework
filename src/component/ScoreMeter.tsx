@@ -1,9 +1,5 @@
 import React from 'react';
 import { v4 as uuid } from 'uuid';
-
-import { courses, updateScore } from '../data/courses';
-
-import { Form, Button } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import {
@@ -13,53 +9,48 @@ import {
    faSmileBeam,
 } from '@fortawesome/free-solid-svg-icons';
 
+import { updateScore } from '../data/progress';
+
 const ICONS = [faSadTear, faFrown, faSmile, faSmileBeam];
 
 interface IScoreMeterProps {
-   courseIndex: number;
+   courseId: string;
 }
 
-function ScoreMeter({ courseIndex }: IScoreMeterProps): React.ReactElement {
-   function handleScoreSelected(value: number): void {
-      if (value >= 0 && value <= 1) {
-         const newScore = {
-            id: courses[courseIndex].id,
-            category: courses[courseIndex].category,
-            value: value,
-         };
-         updateScore(newScore);
-      }
-   }
-
+function ScoreMeter({ courseId }: IScoreMeterProps): React.ReactElement {
    function renderButtons(): React.ReactElement[] {
       const buttons = ICONS.map((icon: IconProp, index: number) => {
          return (
-            <Button
+            <button
                key={uuid()}
-               variant="none"
-               type="button"
                onClick={() => handleScoreSelected((index + 1) / ICONS.length)}
             >
                <FontAwesomeIcon icon={icon} size="3x" />
-            </Button>
+            </button>
          );
       });
       return buttons;
    }
 
+   function handleScoreSelected(value: number): void {
+      if (value >= 0 && value <= 1) {
+         updateScore(courseId, value);
+      }
+   }
+
    return (
-      <Form className="text-center">
+      <div className="text-center">
          <h4>How are we doing?</h4>
-         <Form.Group className="d-inline-flex">{renderButtons()}</Form.Group>
-         <p className="text-muted pt-2">
+         <fieldset>{renderButtons()}</fieldset>
+         <p className="color-dark py-1">
             Select how you feel about this subject to track your progress.
             <br />
-            <sub>
+            <small>
                The score will be set again after completing a test on this
                subject.
-            </sub>
+            </small>
          </p>
-      </Form>
+      </div>
    );
 }
 

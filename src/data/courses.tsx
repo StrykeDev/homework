@@ -1,17 +1,52 @@
-import { storage } from '../component/Utilities';
+import { IconProp } from '@fortawesome/fontawesome-svg-core';
+import {
+   faAddressCard,
+   faCode,
+   faFont,
+   faHandPointLeft,
+   faSitemap,
+   faStream,
+   faWrench,
+} from '@fortawesome/free-solid-svg-icons';
 
-// Local storage entries
-const PROGRESS = 'progress';
+export enum ECourseType {
+   Types = 'Types',
+   Operators = 'Operators',
+   Pointers = 'Pointers',
+   Objects = 'Objects',
+   Functions = 'Functions',
+   Classes = 'Classes',
+   // WinForm = 'WinForm',
+}
 
-// Courses
-// '/learn/advanced_types';
-// '/learn/bitwise_operators';
-// '/learn/objects';
+export function getIconByType(type: ECourseType | string): IconProp {
+   switch (type) {
+      case ECourseType.Types:
+         return faFont;
+      case ECourseType.Operators:
+         return faWrench;
+      case ECourseType.Pointers:
+         return faHandPointLeft;
+      case ECourseType.Objects:
+         return faSitemap;
+      case ECourseType.Functions:
+         return faStream;
+      case ECourseType.Classes:
+         return faAddressCard;
+      // case ECourseType.WinForm:
+      //    return faWindowMaximize;
+      default:
+         return faCode;
+   }
+}
 
 export interface ICourse {
    id: string;
-   category: string;
+   category: ECourseType;
    name: string;
+}
+
+export interface ICourseDetails extends ICourse {
    title: string;
    description: string;
    sections: ICourseSection[];
@@ -23,12 +58,12 @@ export interface ICourseSection {
    example?: string;
 }
 
-export const courses = [
+const courses: ICourseDetails[] = [
    {
       id: 'primitive-types',
-      category: 'Types',
+      category: ECourseType.Types,
       name: 'Primitive types',
-      title: 'Primitive types',
+      title: 'Primitive types overview',
       description: `Primitive types are the most basic types.`,
       sections: [
          {
@@ -79,10 +114,18 @@ export const courses = [
       ],
    },
    {
+      id: 'complex-types',
+      category: ECourseType.Types,
+      name: 'Complex types',
+      title: 'Complex types overview',
+      description: `This course is under construction.`,
+      sections: [],
+   },
+   {
       id: 'math-operators',
-      category: 'Operators',
+      category: ECourseType.Operators,
       name: 'Math operators',
-      title: 'Math operators',
+      title: 'Math operators overview',
       description: `Math operators allow us to preform math operations.`,
       sections: [
          {
@@ -146,9 +189,9 @@ export const courses = [
    },
    {
       id: 'condition-operators',
-      category: 'Operators',
+      category: ECourseType.Operators,
       name: 'Condition operators',
-      title: 'Condition operators',
+      title: 'Condition operators overview',
       description: `Condition operators test the values and return a bool.`,
       sections: [
          {
@@ -218,429 +261,96 @@ export const courses = [
          },
       ],
    },
-];
-
-export function getCourseIndex(id: string) {
-   return courses.findIndex((course) => course.id === id);
-}
-
-// Tests
-export interface ITest {
-   id: string;
-   category: string;
-   topics: string[];
-   name: string;
-   title: string;
-   description: string;
-   questions: ITestQuestion[];
-}
-
-export interface ITestQuestion {
-   question: string;
-   description: string;
-   options: string[];
-   hint?: string;
-   answer: number;
-}
-
-export const tests = [
    {
-      id: 'variables-types',
-      category: 'Type',
-      topics: ['primitive-types'],
-      name: 'Variables declaration',
-      title: 'Variables declaration',
-      description:
-         'This practice test focus on variable declaration and primitive types.',
-      questions: [
-         {
-            question:
-               'Which variable declaration is most suited for counting whole apples?',
-            description: '',
-            options: [
-               'double apples = 3;',
-               'apples = 3;',
-               'int apples = 3;',
-               'apples = 3.0;',
-            ],
-            answer: 2,
-            hint: 'We want to declare a variable that store whole numbers.',
-         },
-         {
-            question:
-               'Which variable declaration is most suited for an account balance?',
-            description: '',
-            options: [
-               'balance = 32,163.51;',
-               'int balance = 32,163.51;',
-               'float balance = 32,163.51;',
-               'double balance = 32,163.51;',
-            ],
-            answer: 3,
-            hint: 'We want to declare a variable that can hold large decimal numbers.',
-         },
-         {
-            question: 'Which variable declaration is correct for type int?',
-            description: '',
-            options: [
-               'int dogs = 2;',
-               'int dogs = 2i;',
-               'int dogs = 2f;',
-               'int dogs = 2d;',
-            ],
-            answer: 0,
-         },
-         {
-            question: 'Which variable declaration is correct for type float?',
-            description: '',
-            options: [
-               'float lengthInMeters = 2.0;',
-               'float lengthInMeters = 2.0i;',
-               'float lengthInMeters = 2.0f;',
-               'float lengthInMeters = 2.0d;',
-            ],
-            answer: 2,
-         },
-         {
-            question: 'Which variable declaration is correct for type double?',
-            description: '',
-            options: [
-               "double coinValue = '0.00005649';",
-               'double coinValue = 0.00005649i;',
-               'double coinValue = 0.00005649f;',
-               'double coinValue = 0.00005649d;',
-            ],
-            answer: 3,
-         },
-         {
-            question: 'Which variable declaration is correct for type char?',
-            description: '',
-            options: [
-               'char letter = A;',
-               'char letter = "A";',
-               "char letter = 'A';",
-               'char letter = `A`;',
-            ],
-            answer: 2,
-         },
-         {
-            question: 'Which variable declaration is correct for type string?',
-            description: '',
-            options: [
-               'string msg = Hello world!;',
-               'string msg = "Hello world!";',
-               "string msg = 'Hello world!';",
-               'string msg = `Hello world!`;',
-            ],
-            answer: 1,
-         },
-         {
-            question: 'Which variable declaration is incorrect?',
-            description: '',
-            options: [
-               'string greeting = "Welcome!";',
-               "char grade = 'C';",
-               'int flightNumber = 526EB01;',
-               'double pie = 3.14;',
-            ],
-            answer: 2,
-            hint: 'Look at the values.',
-         },
-      ],
+      id: 'basic-pointers',
+      category: ECourseType.Pointers,
+      name: 'Basic poiners',
+      title: 'Basic poiners overview',
+      description: `This course is under construction.`,
+      sections: [],
    },
    {
-      id: 'operators-usage',
-      category: 'Operators',
-      topics: ['math-operators', 'condition-operators'],
-      name: 'Operators',
-      title: 'Operators',
-      description: 'This practice test focus on math and condition operators.',
-      questions: [
-         {
-            question: 'Which statement will increase x by 5?',
-            description: '',
-            options: [
-               'double x = 5;',
-               'double x = x + 5;',
-               'double x = y + 5;',
-               'double x = +5;',
-            ],
-            answer: 1,
-         },
-         {
-            question: 'Which shortest statement will multiply x by 5?',
-            description: '',
-            options: [
-               'double x = 5;',
-               'double x = x * 5;',
-               'double x *= 5;',
-               'double x++++++++++;',
-            ],
-            answer: 2,
-         },
-         {
-            question:
-               'Which statement will result in "x = y + 1" AND "y = y + 1"?',
-            description: '',
-            options: [
-               'double x = y;',
-               'double x = y + 1;',
-               'double x = y++;',
-               'double x = ++y;',
-            ],
-            answer: 3,
-            hint: 'We want to increase "y" by 1 and pass it to "x".',
-         },
-         {
-            question:
-               'Which statement will NOT give us the message "Hello world"?',
-            description: '',
-            options: [
-               'Console.WriteLine("Hello world");',
-               'Console.WriteLine("Hello " + "world");',
-               'Console.WriteLine("Hello" + " world");',
-               'Console.WriteLine("Hello" + "world");',
-            ],
-            answer: 3,
-            hint: 'Pay attention to the spaces.',
-         },
-         {
-            question:
-               'Which add operation will give us the message "Hello world"?',
-            description: '',
-            options: [
-               'Console.WriteLine("Hello world");',
-               'Console.WriteLine("Hello" + "world");',
-               'Console.WriteLine("Hello " + "world");',
-               'Console.WriteLine("Hello " + " world");',
-            ],
-            answer: 3,
-            hint: 'We need to use the + operator and pay attention to the spaces.',
-         },
-         {
-            question: 'Which statement is true?',
-            description: '',
-            options: ['true < false;', '5 > 10;', '5 != 10;', "'A' == 'B';"],
-            answer: 2,
-         },
-         {
-            question: 'Which statement is true?',
-            description: '',
-            options: [
-               'true && false',
-               'false || false',
-               'true ^^ true',
-               '!false',
-            ],
-            answer: 3,
-         },
-         {
-            question: 'Which statement is true?',
-            description: '',
-            options: [
-               'true != true',
-               'true == false',
-               'true != !true',
-               'false == !false',
-            ],
-            answer: 2,
-         },
-      ],
+      id: 'pointer-to-pointer',
+      category: ECourseType.Pointers,
+      name: 'Pointer to Pointer',
+      title: 'Pointer to Pointer',
+      description: `This course is under construction.`,
+      sections: [],
    },
    {
-      id: 'adv-operators-usage',
-      category: 'Operators',
-      topics: ['condition-operators'],
-      name: 'Advanced operators',
-      title: 'Advanced operators',
-      description: 'This practice test focus on condition operators.',
-      questions: [
-         {
-            question: 'Which statement is true?',
-            description: '',
-            options: [
-               '(10 > 10) && (10 < 10)',
-               '(10 > 10) || (10 < 10)',
-               '(10 >= 10) == (10 <= 10)',
-               '(10 >= 10) != (10 <= 10)',
-            ],
-            answer: 2,
-         },
-         {
-            question: 'Which statement is true?',
-            description: '',
-            options: [
-               '(!true) && (10 < 10)',
-               '(10 > 10) || (!false)',
-               '(!true) == (10 <= 10)',
-               '(10 >= 10) != (!true)',
-            ],
-            answer: 1,
-         },
-         {
-            question: 'Which statement is true?',
-            description: '',
-            options: [
-               'true && false && true && false',
-               'true || false || true || false',
-               'true == false == true == false',
-               'true == false != true == false',
-            ],
-            answer: 1,
-         },
-         {
-            question: 'Which statement is true?',
-            description: '',
-            options: [
-               '(true != true) && (true == false)',
-               '(true != true) || (true == false)',
-               '(true != true) == (true == false)',
-               '(true != true) != (true == false)',
-            ],
-            answer: 2,
-         },
-         {
-            question: 'Which statement is false?',
-            description: '',
-            options: [
-               '(true == true) && (true != false)',
-               '(true != true) || (true != false)',
-               '(!true != true) == (true == !false)',
-               '(true == true) != (true == !false)',
-            ],
-            answer: 3,
-         },
-         {
-            question: 'Which statement is false?',
-            description: '',
-            options: [
-               '(true || true) && (true ^^ false)',
-               '(true && true) || (true || false)',
-               '(true ^^ true) ^^ (true == false)',
-               '(true == true) != (true && false)',
-            ],
-            answer: 2,
-         },
-         {
-            question: 'Which statement is false?',
-            description: '',
-            options: [
-               '(true ^^ !true) && (true == !false)',
-               '(true == !true) || (true && !false)',
-               '(true && !true) ^^ (true || !false)',
-               '(true || !true) == (true ^^ !false)',
-            ],
-            answer: 3,
-         },
-         {
-            question: 'Which statement is false?',
-            description: '',
-            options: [
-               '(true || true) && !(true || true)',
-               '!(true ^^ true) || (true ^^ false)',
-               '(true && true) ^^ !(true || false)',
-               '!(true || true) == (true && false)',
-            ],
-            answer: 0,
-         },
-      ],
+      id: 'objects-overview',
+      category: ECourseType.Objects,
+      name: 'Objects overview',
+      title: 'Objects overview',
+      description: `This course is under construction.`,
+      sections: [],
+   },
+   {
+      id: 'objects-inheritance',
+      category: ECourseType.Objects,
+      name: 'Object inheritance',
+      title: 'Object inheritance',
+      description: `This course is under construction.`,
+      sections: [],
+   },
+   {
+      id: 'functions-overview',
+      category: ECourseType.Functions,
+      name: 'Functions overview',
+      title: 'Functions overview',
+      description: `This course is under construction.`,
+      sections: [],
+   },
+   {
+      id: 'recursive-functions',
+      category: ECourseType.Functions,
+      name: 'Recursive functions',
+      title: 'Recursive functions',
+      description: `This course is under construction.`,
+      sections: [],
+   },
+   {
+      id: 'classes-overview',
+      category: ECourseType.Classes,
+      name: 'Classes overview',
+      title: 'Classes overview',
+      description: `This course is under construction.`,
+      sections: [],
+   },
+   {
+      id: 'class-inheritance',
+      category: ECourseType.Classes,
+      name: 'Class inheritance',
+      title: 'Class inheritance',
+      description: `This course is under construction.`,
+      sections: [],
    },
 ];
 
-export function getTestIndex(id: string) {
-   return tests.findIndex((test) => test.id === id);
+export function getCourses(): ICourse[] {
+   return courses;
 }
 
-// Score
-export interface IScore {
-   id: string;
-   category: string;
-   value: number;
-}
+export function getCourse(id: string): ICourse {
+   const course = courses.find((course: ICourse) => {
+      return course.id === id;
+   });
 
-export function initProgress() {
-   const rawProgress = storage.get(PROGRESS);
-   if (rawProgress) {
-      const progress = JSON.parse(rawProgress);
-      const fillerProgress = courses.map((course: ICourse) => {
-         const res = progress.indexOf((data: IScore) => {
-            return data.id == course.id;
-         });
-         if (res === -1) {
-            return {
-               id: course.id,
-               category: course.category,
-               value: 0,
-            };
-         }
-      });
-      const newProgress = [...progress, ...fillerProgress];
-      storage.set(PROGRESS, JSON.stringify(newProgress));
+   if (course) {
+      return course;
    } else {
-      const newProgress = courses.map((course: ICourse) => {
-         return {
-            id: course.id,
-            category: course.category,
-            value: 0,
-         };
-      });
-      storage.set(PROGRESS, JSON.stringify(newProgress));
+      throw new Error(`Invalid course requested id: '${id}'.`);
    }
 }
 
-export function updateScore(newScore: IScore) {
-   const rawProgress = storage.get(PROGRESS);
-   if (rawProgress) {
-      const progress = JSON.parse(rawProgress).filter((score: IScore) => {
-         return score.id != newScore.id;
-      });
-      storage.set(PROGRESS, JSON.stringify([...progress, newScore]));
+export function getCourseDetails(id: string): ICourseDetails {
+   const course = courses.find((course: ICourse) => {
+      return course.id === id;
+   });
+
+   if (course) {
+      return course;
    } else {
-      storage.set(PROGRESS, JSON.stringify([newScore]));
+      throw new Error(`Invalid course requested id: '${id}'.`);
    }
-}
-
-export function getProgress(): IScore[] {
-   const data = storage.get(PROGRESS);
-   return data ? JSON.parse(data) : [];
-}
-
-export interface IScoreSummery {
-   category: string;
-   score: number;
-}
-
-export function getProgressSummery(): IScoreSummery[] {
-   const progress = getProgress();
-   const progressSummery: { category: string; scores: number[] }[] = [];
-
-   progress.forEach((item: IScore) => {
-      const scoreIndex = progressSummery.findIndex(
-         (score) => score.category === item.category,
-      );
-
-      if (scoreIndex === -1) {
-         progressSummery.push({
-            category: item.category,
-            scores: [item.value],
-         });
-      } else {
-         progressSummery[scoreIndex].scores.push(item.value);
-      }
-   });
-
-   const avgSummery = progressSummery.map((item) => {
-      const avgScore =
-         item.scores.reduce((total, curr) => total + curr) / item.scores.length;
-      return { category: item.category, score: avgScore };
-   });
-
-   let overall = 0;
-   avgSummery.forEach((item) => {
-      overall += item.score;
-   });
-
-   overall = overall / avgSummery.length;
-
-   return [{ category: 'Overall', score: overall }, ...avgSummery];
 }

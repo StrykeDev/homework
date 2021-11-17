@@ -1,16 +1,67 @@
 .app {
    display: grid;
    grid-template-rows: auto 1fr auto;
-   overflow-y: scroll;
+   overflow: hidden scroll;
    width: 100vw;
    height: 100vh;
-   scroll-behavior: smooth;
 }
 
-a {
-   text-decoration: none !important;
+.title {
+   font-weight: 400;
 }
 
-hr {
-   margin: 4em 0 !important;
+.radio-wrapper {
+   display: flex;
+   align-items: center;
+   cursor: pointer;
+   user-select: none;
+}
+
+.radio-wrapper input {
+   display: none;
+}
+
+.radio {
+   display: inline-block;
+   width: 1em;
+   height: 1em;
+   margin: 0.75em;
+   border: var(--bg-light) solid 0.25em;
+   border-radius: 50%;
+   background-color: var(--btn-normal);
+   transition: background-color var(--transition-quick);
+}
+
+.radio-wrapper input:hover ~ .radio {
+   background-color: var(--btn-light);
+}
+
+.radio-wrapper input:active ~ .radio,
+.radio-wrapper input:disabled ~ .radio {
+   background-color: var(--btn-dark);
+}
+
+.radio-wrapper input:checked ~ .radio {
+   background-color: var(--accent-color);
+}
+
+.radio-wrapper .radio.valid {
+   background-color: var(--accent-color) !important;
+}
+
+.radio-wrapper .radio.invalid {
+   background-color: var(--danger-color) !important;
+}
+
+.footer {
+   display: flex;
+   flex-direction: row;
+   align-items: center;
+   justify-content: space-between;
+}
+
+@media only screen and (max-width: 600px) {
+   .footer {
+      flex-direction: column;
+   }
 }

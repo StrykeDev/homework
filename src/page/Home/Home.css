@@ -1,0 +1,82 @@
+.practice-deck {
+   display: grid;
+   grid-template-columns: 1fr 1fr 1fr;
+   gap: 1.5em;
+}
+
+.learn-deck {
+   display: grid;
+   grid-template-columns: 1fr 1fr 1fr;
+   gap: 1.5em;
+}
+
+.progress-deck {
+   display: grid;
+   grid-template-columns: 1fr 1fr 1fr;
+   gap: 1em 4em;
+}
+
+.progress-deck .progress-card {
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   justify-content: center;
+   width: fit-content;
+}
+
+.home-header {
+   display: grid;
+   grid-template-columns: 1fr 35em;
+   gap: 1em;
+   max-width: 95vw;
+}
+
+.progress-overview {
+   position: relative;
+}
+
+.progress-overview .circle {
+   position: absolute;
+   top: -10em;
+   right: -5em;
+   z-index: -1;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   width: 42em;
+   border-radius: 50%;
+   aspect-ratio: 1 / 1;
+}
+
+@media only screen and (max-width: 900px) {
+   .home-header {
+      display: unset;
+      text-align: center;
+   }
+
+   .progress-overview {
+      display: none;
+   }
+
+   .practice-deck {
+      grid-template-columns: 1fr 1fr;
+   }
+
+   .progress-deck .progress-card {
+      width: unset;
+   }
+
+   .learn-deck {
+      grid-template-columns: 1fr 1fr;
+   }
+}
+
+@media only screen and (max-width: 600px) {
+   .practice-deck {
+      grid-template-columns: 1fr;
+   }
+
+   .learn-deck {
+      grid-template-columns: 1fr;
+   }
+}

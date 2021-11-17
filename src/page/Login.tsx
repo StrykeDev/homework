@@ -1,6 +1,4 @@
 import React, { useState } from 'react';
-
-import { Container, Form, Button } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUserCircle } from '@fortawesome/free-solid-svg-icons';
 
@@ -23,19 +21,18 @@ function Login({ onLogin }: ILoginProps): React.ReactElement {
    }
 
    return (
-      <Container className="my-5 text-center">
-         <div className="my-5 py-5">
-            <h1 className="display-4">Welcome to Homework!</h1>
-            <h4>Lets get started.</h4>
+      <div className="my-4 text-center">
+         <div className="mb-2">
+            <h1>
+               Welcome to <span className="title">Homework</span>!
+            </h1>
+            <h3>Lets get started.</h3>
          </div>
-         <div
-            className="bg-light rounded p-2 d-inline-block w-100"
-            style={{ maxWidth: '25em' }}
-         >
-            <FontAwesomeIcon icon={faUserCircle} size="10x" className="my-4" />
-            <Form onSubmit={handleRegister} className="m-2 d-grid gap-2 ">
-               <Form.Group>
-                  <Form.Control
+         <div className="dialog bg-normal rounded">
+            <div className="p-1">
+               <FontAwesomeIcon icon={faUserCircle} size="10x" />
+               <form onSubmit={handleRegister} className="mt-1">
+                  <input
                      type="text"
                      placeholder="What are we going to call you?"
                      value={inputName}
@@ -43,13 +40,11 @@ function Login({ onLogin }: ILoginProps): React.ReactElement {
                         setInputName(event.currentTarget.value)
                      }
                   />
-               </Form.Group>
-               <Button variant="primary" type="submit">
-                  Start learning
-               </Button>
-            </Form>
+                  <input className="btn" type="submit" value="Start learning" />
+               </form>
+            </div>
          </div>
-      </Container>
+      </div>
    );
 }
 

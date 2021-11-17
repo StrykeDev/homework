@@ -1,5 +1,15 @@
 import React from 'react';
 import { v4 as uuid } from 'uuid';
+import { IconProp } from '@fortawesome/fontawesome-svg-core';
+import {
+   faSmileBeam,
+   faSmileWink,
+   faSmile,
+   faFrown,
+   faSadTear,
+   faQuestionCircle,
+} from '@fortawesome/free-solid-svg-icons';
+
 import { ID } from '../App';
 
 export const storage = {
@@ -27,3 +37,18 @@ export const text = {
       });
    },
 };
+
+export function getIconByValue(value: number): IconProp {
+   if (value >= 0.8) {
+      return faSmileBeam;
+   } else if (value == 0.69) {
+      return faSmileWink;
+   } else if (value >= 0.6) {
+      return faSmile;
+   } else if (value >= 0.4) {
+      return faFrown;
+   } else if (value > 0) {
+      return faSadTear;
+   }
+   return faQuestionCircle;
+}

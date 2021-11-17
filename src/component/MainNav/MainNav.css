@@ -1,0 +1,49 @@
+.main-nav {
+   --nav-height: 4em;
+   --nav-max-height: 20em;
+
+   overflow: hidden;
+   height: var(--nav-height);
+   transition: height var(--transition-normal),
+      background-color var(--transition-quick);
+}
+
+.main-nav.show {
+   height: var(--nav-max-height);
+}
+
+.main-nav .nav-items {
+   display: flex;
+   align-items: center;
+   height: var(--nav-height);
+}
+
+.main-nav a {
+   padding: 0 1em;
+   border: none;
+   background: transparent;
+}
+
+.main-nav .drop-list {
+   display: grid;
+   grid-template-columns: 1fr 1fr 1fr;
+   gap: 1em;
+   padding: 0 2em;
+}
+
+.main-nav .nav-details {
+   overflow: scroll;
+   height: calc(var(--nav-max-height) - var(--nav-height));
+}
+
+@media only screen and (max-width: 900px) {
+   .main-nav .drop-list {
+      grid-template-columns: 1fr 1fr;
+   }
+}
+
+@media only screen and (max-width: 600px) {
+   .main-nav .drop-list {
+      grid-template-columns: 1fr;
+   }
+}

@@ -3,25 +3,25 @@ import { Navigate, useParams } from 'react-router';
 import { v4 as uuid } from 'uuid';
 import SyntaxHighlighter from 'highlight.js/lib/core';
 import csharp from 'highlight.js/lib/languages/csharp';
-import 'highlight.js/styles/github.css';
+import 'highlight.js/styles/vs2015.css';
 
 import { getCourseDetails, ICourseSection } from '../data/courses';
 
 import ScoreMeter from '../component/ScoreMeter';
 import { text } from '../component/Utilities';
 
-import { ERROR } from '../App/App';
+import { PATH_ERROR } from '../App/App';
 
 function Learn(): React.ReactElement {
-   const params = useParams();
+   const param = useParams();
 
    useEffect(() => {
       SyntaxHighlighter.registerLanguage('cs', csharp);
       SyntaxHighlighter.highlightAll();
-   }, [params]);
+   }, [param]);
 
-   if (params.id) {
-      const course = getCourseDetails(params.id);
+   if (param.id) {
+      const course = getCourseDetails(param.id);
       if (course) {
          return (
             <div className="container">
@@ -40,7 +40,7 @@ function Learn(): React.ReactElement {
                                  className="language-cs"
                                  style={{ maxWidth: '95vw' }}
                               >
-                                 <code className="bg-white color-black rounded">
+                                 <code className="bg-black color-white rounded">
                                     {section.example}
                                  </code>
                               </pre>
@@ -59,7 +59,7 @@ function Learn(): React.ReactElement {
          );
       }
    }
-   return <Navigate to={ERROR} />;
+   return <Navigate to={PATH_ERROR} />;
 }
 
 export default Learn;

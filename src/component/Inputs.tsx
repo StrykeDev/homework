@@ -78,12 +78,14 @@ export function ProgressCircle({
                r={size - thickness / 2}
                style={{
                   fill: 'none',
-                  stroke: 'var(--btn-normal)',
+                  stroke:
+                     value < 1 ? 'var(--btn-normal)' : 'var(--accent-color)',
                   transform: `translate(${thickness / 2}px,${thickness / 2}px)`,
                   strokeWidth: thickness,
                }}
             />
             <circle
+               className={value > 0 && value < 1 ? '' : 'hide'}
                cx={size - thickness / 2}
                cy={size - thickness / 2}
                r={size - thickness / 2}
@@ -93,8 +95,8 @@ export function ProgressCircle({
                   transform: `translate(${thickness / 2}px,${thickness / 2}px)`,
                   strokeWidth: thickness,
                   strokeLinecap: 'round',
-                  strokeDasharray: size * 5.37,
-                  strokeDashoffset: `calc(${size * 5.37} - (${size * 5.37} * ${
+                  strokeDasharray: size * 5.25,
+                  strokeDashoffset: `calc(${size * 5.25} - (${size * 5.25} * ${
                      value * 100
                   }) / 100)`,
                }}

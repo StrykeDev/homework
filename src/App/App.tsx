@@ -16,10 +16,10 @@ import Error from '../page/Error';
 import './App.css';
 
 export const ID = 'com.homework.app';
-export const VERSION = '0.2.0';
-export const CONTENT = '0.2.0';
-export const INDEX = '/homework/net';
-export const ERROR = INDEX + '/error';
+export const VERSION = '0.2.1';
+export const CONTENT = '0.2.1';
+export const PATH_INDEX = '/homework';
+export const PATH_ERROR = PATH_INDEX + '/error';
 
 export const userContext = createContext<string>('');
 
@@ -57,15 +57,15 @@ function App(): React.ReactElement {
                   <MainNav />
                </div>
                <Routes>
-                  <Route path={INDEX + '/learn/:id'} element={<Learn />} />
+                  <Route path={PATH_INDEX + '/learn/:id'} element={<Learn />} />
                   <Route
-                     path={INDEX + '/practice/:id'}
+                     path={PATH_INDEX + '/practice/:id'}
                      element={<Practice />}
                   />
-                  <Route path={INDEX} element={<Home />} />
-                  <Route path={INDEX + '/error'} element={<Error />} />
-                  <Route path="/" element={<Navigate to={INDEX} />} />
-                  <Route path="*" element={<Navigate to={ERROR} />} />
+                  <Route path={PATH_INDEX} element={<Home />} />
+                  <Route path={PATH_INDEX + '/error'} element={<Error />} />
+                  <Route path="/" element={<Navigate to={PATH_INDEX} />} />
+                  <Route path="*" element={<Navigate to={PATH_ERROR} />} />
                </Routes>
                <Footer />
             </userContext.Provider>

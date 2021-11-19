@@ -1,11 +1,12 @@
 .main-nav {
    --nav-height: 4em;
-   --nav-max-height: 20em;
+   --nav-max-height: 25em;
 
    overflow: hidden;
    height: var(--nav-height);
    transition: height var(--transition-normal),
       background-color var(--transition-quick);
+   white-space: nowrap;
 }
 
 .main-nav.show {
@@ -32,7 +33,7 @@
 }
 
 .main-nav .nav-details {
-   overflow: scroll;
+   overflow: auto;
    height: calc(var(--nav-max-height) - var(--nav-height));
 }
 

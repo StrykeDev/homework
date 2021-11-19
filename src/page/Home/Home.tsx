@@ -20,7 +20,7 @@ import {
    IProgressSummery,
 } from '../../data/progress';
 
-import { INDEX, userContext } from '../../App';
+import { PATH_INDEX, userContext } from '../../App';
 
 import './Home.css';
 
@@ -37,15 +37,6 @@ function Home(): React.ReactElement {
          );
       });
 
-      while (out.length % 3) {
-         out.push(
-            <div key={uuid()} className="progress-card">
-               <h5 className="hide">...</h5>
-               <ProgressCircle value={0} />
-            </div>,
-         );
-      }
-
       return out;
    }
 
@@ -53,7 +44,7 @@ function Home(): React.ReactElement {
       const out: React.ReactElement[] = [];
       const courses = getCourses();
 
-      Object.keys(ECourseType).forEach((type: string) => {
+      Object.values(ECourseType).forEach((type: string) => {
          const listItems: React.ReactElement[] = [];
          const filtered = courses.filter((course: ICourse) => {
             return course.category === type;
@@ -62,7 +53,9 @@ function Home(): React.ReactElement {
          filtered.forEach((course: ICourse) => {
             listItems.push(
                <li key={uuid()}>
-                  <Link to={INDEX + '/learn/' + course.id}>{course.name}</Link>
+                  <Link to={PATH_INDEX + '/learn/' + course.id}>
+                     {course.name}
+                  </Link>
                </li>,
             );
          });
@@ -78,15 +71,6 @@ function Home(): React.ReactElement {
          );
       });
 
-      while (out.length % 6) {
-         out.push(
-            <div key={uuid()} className="bg-normal rounded p-1">
-               <h5 className="d-flex justify-content-between hide">...</h5>
-               <ul className="list-unstyled hide">...</ul>
-            </div>,
-         );
-      }
-
       return out;
    }
 
@@ -100,7 +84,7 @@ function Home(): React.ReactElement {
             <Link
                key={uuid()}
                className="btn bg-normal m-0 p-1 d-flex align-items-center justify-content-between"
-               to={INDEX + '/practice/' + test.id}
+               to={PATH_INDEX + '/practice/' + test.id}
             >
                <span>
                   <h5>{test.category}</h5>
@@ -113,21 +97,6 @@ function Home(): React.ReactElement {
             </Link>,
          );
       });
-
-      while (out.length % 6) {
-         out.push(
-            <a
-               key={uuid()}
-               className="btn bg-normal color-dark m-0 p-1 d-flex align-items-center justify-content-between"
-            >
-               <span className="hide">
-                  <h5>...</h5>
-                  <p>...</p>
-               </span>
-               <FontAwesomeIcon icon={getIconByValue(0)} size="3x" />
-            </a>,
-         );
-      }
 
       return out;
    }

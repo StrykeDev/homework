@@ -18,7 +18,7 @@ const tests: ITestDetails[] = [
    {
       id: 'types-test',
       category: ECourseType.Types,
-      name: 'Types',
+      name: 'Declaration and usage',
       title: 'Types declaration and usage',
       description: 'This test focus on types declaration and usage.',
       questions: [
@@ -40,10 +40,10 @@ const tests: ITestDetails[] = [
                'Which variable declaration is most suited for an account balance?',
             description: '',
             options: [
-               'balance = 32,163.51;',
-               'int balance = 32,163.51;',
-               'float balance = 32,163.51;',
-               'double balance = 32,163.51;',
+               'balance = 32163.51;',
+               'int balance = 32163.51;',
+               'float balance = 32163.51;',
+               'double balance = 32163.51;',
             ],
             answer: 3,
             hint: 'We want to declare a variable that can hold large decimal numbers.',
@@ -120,7 +120,7 @@ const tests: ITestDetails[] = [
    {
       id: 'operators-test',
       category: ECourseType.Operators,
-      name: 'Operators',
+      name: 'Math and condition usage',
       title: 'Operators usage',
       description: 'This test focus on math and condition operators.',
       questions: [
@@ -239,6 +239,38 @@ const tests: ITestDetails[] = [
             answer: 0,
          },
       ],
+   },
+   {
+      id: 'pointers-test',
+      category: ECourseType.Pointers,
+      name: 'Declaration and usage',
+      title: 'Pointers declaration and usage',
+      description: 'This test is under construction.',
+      questions: [],
+   },
+   {
+      id: 'objects-test',
+      category: ECourseType.Objects,
+      name: 'Declaration, usage and inheritance',
+      title: 'Objects declaration, usage and inheritance',
+      description: 'This test is under construction.',
+      questions: [],
+   },
+   {
+      id: 'functions-test',
+      category: ECourseType.Functions,
+      name: 'Declaration and recursion',
+      title: 'Functions declaration and recursion',
+      description: 'This test is under construction.',
+      questions: [],
+   },
+   {
+      id: 'events-test',
+      category: ECourseType.Events,
+      name: 'Declaration and usage',
+      title: 'Events declaration and usage',
+      description: 'This test is under construction.',
+      questions: [],
    },
 ];
 

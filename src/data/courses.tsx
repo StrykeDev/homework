@@ -1,6 +1,6 @@
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import {
-   faAddressCard,
+   faBolt,
    faCode,
    faFont,
    faHandPointLeft,
@@ -15,8 +15,7 @@ export enum ECourseType {
    Pointers = 'Pointers',
    Objects = 'Objects',
    Functions = 'Functions',
-   Classes = 'Classes',
-   // WinForm = 'WinForm',
+   Events = 'Events',
 }
 
 export function getIconByType(type: ECourseType | string): IconProp {
@@ -31,10 +30,8 @@ export function getIconByType(type: ECourseType | string): IconProp {
          return faSitemap;
       case ECourseType.Functions:
          return faStream;
-      case ECourseType.Classes:
-         return faAddressCard;
-      // case ECourseType.WinForm:
-      //    return faWindowMaximize;
+      case ECourseType.Events:
+         return faBolt;
       default:
          return faCode;
    }
@@ -62,8 +59,8 @@ const courses: ICourseDetails[] = [
    {
       id: 'primitive-types',
       category: ECourseType.Types,
-      name: 'Primitive types',
-      title: 'Primitive types overview',
+      name: 'Primitive',
+      title: 'Primitive types',
       description: `Primitive types are the most basic types.`,
       sections: [
          {
@@ -94,7 +91,7 @@ const courses: ICourseDetails[] = [
             example: `// Declaration
    int age = 30;
    float distance = 450.562f;
-   double balance1 = 1115313.315134d; // the d at the end is optional`,
+   double balance1 = 1115313.315134d; // The d at the end is optional`,
          },
          {
             title: `char and string`,
@@ -109,23 +106,23 @@ const courses: ICourseDetails[] = [
                Input text MUST use this format: "Text"`,
             example: `// Declaration
    char theLetterB = 'B';
-   string message = "Oh no we are out of milk!";`,
+   string message = "Oh no, we are out of milk!";`,
          },
       ],
    },
    {
       id: 'complex-types',
       category: ECourseType.Types,
-      name: 'Complex types',
-      title: 'Complex types overview',
+      name: 'Complex',
+      title: 'Complex types',
       description: `This course is under construction.`,
       sections: [],
    },
    {
       id: 'math-operators',
       category: ECourseType.Operators,
-      name: 'Math operators',
-      title: 'Math operators overview',
+      name: 'Math',
+      title: 'Math operators',
       description: `Math operators allow us to preform math operations.`,
       sections: [
          {
@@ -169,29 +166,29 @@ const courses: ICourseDetails[] = [
    int x = 0;
    int result = 0;
 
-   result = x++\t\t// result = 0, x = 1
-   result = x--\t\t// result = 0, x = -1
-   result = ++x\t\t// result = 1, x = 1
-   result = --x\t\t// result = -1, x = -1
+   result = x++;\t// result = 0, x = 1
+   result = x--;\t// result = 0, x = -1
+   result = ++x;\t// result = 1, x = 1
+   result = --x;\t// result = -1, x = -1
    
 // Other types
-   double myDouble = 0.0
-   myDouble++\t\t// myDouble = 1.0
+   double myDouble = 0.0;
+   myDouble++;\t\t// myDouble = 1.0
 
-   float myFloat = 0.0f
-   myFloat++\t\t// myFloat = 1.0f
+   float myFloat = 0.0f;
+   myFloat++;\t\t// myFloat = 1.0f
 
 // Chaining
-   result = x++++\t\t// result = 0, x = 2, Use x+=2 instead!
-   result = ++++++x\t\t// result = 3, x = 3, Use x+=3 instead!`,
+   x++++;\t\t// x = 2, Use x+=2 instead!
+   x++++++;\t\t// x = 3, Use x+=3 instead!`,
          },
       ],
    },
    {
       id: 'condition-operators',
       category: ECourseType.Operators,
-      name: 'Condition operators',
-      title: 'Condition operators overview',
+      name: 'Condition',
+      title: 'Condition operators',
       description: `Condition operators test the values and return a bool.`,
       sections: [
          {
@@ -264,23 +261,23 @@ const courses: ICourseDetails[] = [
    {
       id: 'basic-pointers',
       category: ECourseType.Pointers,
-      name: 'Basic poiners',
-      title: 'Basic poiners overview',
+      name: 'Overview',
+      title: 'Pointers overview',
       description: `This course is under construction.`,
       sections: [],
    },
    {
-      id: 'pointer-to-pointer',
+      id: 'advanced-pointers',
       category: ECourseType.Pointers,
-      name: 'Pointer to Pointer',
-      title: 'Pointer to Pointer',
+      name: 'Advanced',
+      title: 'Advanced overview',
       description: `This course is under construction.`,
       sections: [],
    },
    {
       id: 'objects-overview',
       category: ECourseType.Objects,
-      name: 'Objects overview',
+      name: 'Overview',
       title: 'Objects overview',
       description: `This course is under construction.`,
       sections: [],
@@ -288,7 +285,7 @@ const courses: ICourseDetails[] = [
    {
       id: 'objects-inheritance',
       category: ECourseType.Objects,
-      name: 'Object inheritance',
+      name: 'Inheritance',
       title: 'Object inheritance',
       description: `This course is under construction.`,
       sections: [],
@@ -296,7 +293,7 @@ const courses: ICourseDetails[] = [
    {
       id: 'functions-overview',
       category: ECourseType.Functions,
-      name: 'Functions overview',
+      name: 'Overview',
       title: 'Functions overview',
       description: `This course is under construction.`,
       sections: [],
@@ -304,24 +301,24 @@ const courses: ICourseDetails[] = [
    {
       id: 'recursive-functions',
       category: ECourseType.Functions,
-      name: 'Recursive functions',
+      name: 'Recursion',
       title: 'Recursive functions',
       description: `This course is under construction.`,
       sections: [],
    },
    {
-      id: 'classes-overview',
-      category: ECourseType.Classes,
-      name: 'Classes overview',
-      title: 'Classes overview',
+      id: 'events-overview',
+      category: ECourseType.Events,
+      name: 'Overview',
+      title: 'Events overview',
       description: `This course is under construction.`,
       sections: [],
    },
    {
-      id: 'class-inheritance',
-      category: ECourseType.Classes,
-      name: 'Class inheritance',
-      title: 'Class inheritance',
+      id: 'async-events',
+      category: ECourseType.Events,
+      name: 'Asynchronous',
+      title: 'Async events',
       description: `This course is under construction.`,
       sections: [],
    },

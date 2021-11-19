@@ -24,19 +24,6 @@
 }
 
 :root {
-   --accent-color: #2279eb;
-   --secondary-color: #808080;
-   --success-color: #6cdf7f;
-   --danger-color: #df5b66;
-   --bg-light: #3a3b3d;
-   --bg-normal: #1c1d1f;
-   --bg-dark: #18181a;
-   --text-light: #ffffff;
-   --text-normal: #c0c0c0;
-   --text-dark: #757575;
-   --btn-light: #ffffff1f;
-   --btn-normal: #ffffff15;
-   --btn-dark: #00000015;
    --border-radius: 1em;
    --transition-quick: ease 0.2s;
    --transition-normal: ease 0.5s;
@@ -44,12 +31,46 @@
 }
 
 body {
+   --accent-color: #2279eb;
+   --secondary-color: #808080;
+   --success-color: #47e662;
+   --danger-color: #e23d4b;
+   --bg-light: #3a3b3d;
+   --bg-normal: #1c1d1f;
+   --bg-dark: #18181a;
+   --text-light: #ffffff;
+   --text-normal: #c0c0c0;
+   --text-dark: #757575;
+   --btn-light: #fafbff1f;
+   --btn-normal: #fafbff15;
+   --btn-dark: #08080815;
+
    margin: 0;
    background-color: var(--bg-dark);
    color: var(--text-normal);
-   font-size: 1rem;
+   font-size: 0.95rem;
    font-family: Roboto, sans-serif;
    scroll-behavior: smooth;
+
+   transition: color var(--transition-quick),
+      background-color var(--transition-quick),
+      font-size var(--transition-normal);
+}
+
+body.light-theme {
+   --bg-light: #f0f2f5;
+   --bg-normal: #f7f7f8;
+   --bg-dark: #ffffff;
+   --text-light: #0e0e0e;
+   --text-normal: #585858;
+   --text-dark: #818181;
+   --btn-light: #0808081f;
+   --btn-normal: #08080815;
+   --btn-dark: #fafbff15;
+}
+
+body.font-large {
+   font-size: 1.25rem;
 }
 
 .container {
@@ -141,7 +162,7 @@ a {
 }
 
 a:hover,
-a:focus {
+a:focus-visible {
    color: var(--text-light);
 }
 
@@ -196,6 +217,8 @@ button,
 input[type='button'] {
    background-color: transparent;
    cursor: pointer;
+   transition: color var(--transition-quick),
+      background-color var(--transition-quick);
 }
 
 input,
@@ -226,7 +249,7 @@ input[type='radio'] {
 }
 
 .btn:hover,
-.btn:focus {
+.btn:focus-visible {
    background-color: var(--btn-light);
    color: var(--text-light);
 }
@@ -241,41 +264,45 @@ input[type='radio'] {
 .color-dark {
    color: var(--text-dark);
 }
-
 .color-normal {
    color: var(--text-normal);
 }
-
 .color-light {
    color: var(--text-light);
 }
-
 .color-accent {
    color: var(--accent-color);
 }
-
 .color-secondary {
    color: var(--secondary-color);
+}
+.color-black {
+   color: black;
+}
+.color-white {
+   color: white;
 }
 
 .bg-dark {
    background-color: var(--bg-dark);
 }
-
 .bg-normal {
    background-color: var(--bg-normal);
 }
-
 .bg-light {
    background-color: var(--bg-light);
 }
-
 .bg-accent {
    background-color: var(--accent-color);
 }
-
 .bg-secondary {
    background-color: var(--secondary-color);
+}
+.bg-black {
+   background-color: #141414;
+}
+.bg-white {
+   background-color: #e9e9e9;
 }
 
 /* Utilities */
@@ -297,7 +324,7 @@ input[type='radio'] {
 }
 
 hr {
-   margin: 4em 0 !important;
+   margin: 4rem 0 !important;
    border-color: var(--text-dark);
 }
 

@@ -1,6 +1,7 @@
 import { storage } from '../component/Utilities';
 
 import { ECourseType, getCourses, ICourse } from './courses';
+import { getTest } from './tests';
 
 // Local storage entries
 const PROGRESS = 'progress';
@@ -69,6 +70,20 @@ export function updateScoreCategory(
    storage.set(PROGRESS, JSON.stringify(progress));
 }
 
+export function getScore(id: string): IProgress {
+   const progress = getProgress().find((data) => {
+      if (data.id === id) {
+         return data;
+      }
+   });
+
+   if (progress) {
+      return progress;
+   } else {
+      throw new Error(`Invalid score id: '${id}'`);
+   }
+}
+
 export interface IProgressSummery {
    category: string;
    value: number;
@@ -78,7 +93,7 @@ export function getProgressSummery(): IProgressSummery[] {
    const progress = getProgress();
    const progressSummery: IProgressSummery[] = [];
 
-   Object.keys(ECourseType).forEach((type) => {
+   Object.values(ECourseType).forEach((type) => {
       const values: number[] = [];
 
       progress.forEach((course) => {
@@ -127,15 +142,21 @@ export function getTestScore(id: string): ITestScore | undefined {
 }
 
 export function updateTestScore(id: string, value: number): void {
-   const tests = getTestsScores().map((data) => {
-      if (data.id === id) {
-         data.last = data.value;
-         data.value = value;
-         if (data.best < value) {
-            data.best = value;
-         }
-      }
-      return data;
+   const testsScore = getTestsScores();
+   const testIndex = testsScore.findIndex((test) => {
+      return test.id === id;
    });
-   storage.set(TESTS, JSON.stringify(tests));
+
+   if (testIndex !== -1) {
+      testsScore[testIndex].last = testsScore[testIndex].value;
+      testsScore[testIndex].value = value;
+      if (testsScore[testIndex].best < value) {
+         testsScore[testIndex].best = value;
+      }
+   } else {
+      const test = getTest(id);
+      testsScore.push({ ...test, value: value, best: value, last: 0 });
+   }
+
+   storage.set(TESTS, JSON.stringify(testsScore));
 }

@@ -1,6 +1,9 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { useParams } from 'react-router';
 import { v4 as uuid } from 'uuid';
+import SyntaxHighlighter from 'highlight.js/lib/core';
+import csharp from 'highlight.js/lib/languages/csharp';
+import 'highlight.js/styles/vs2015.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import {
@@ -14,9 +17,13 @@ import {
 import { text } from '../component/Utilities';
 
 import { ITestQuestion, getTestDetails, ITestDetails } from '../data/tests';
-import { updateScore, updateScoreCategory } from '../data/progress';
+import {
+   updateScore,
+   updateScoreCategory,
+   updateTestScore,
+} from '../data/progress';
 
-import { ERROR, userContext } from '../App/App';
+import { PATH_ERROR, userContext } from '../App/App';
 import { Radio } from '../component/Inputs';
 
 interface IQuestion {
@@ -33,8 +40,6 @@ function Practice(): React.ReactElement {
    const [validation, setValidation] = useState(false);
 
    useEffect((): void => {
-      console.log('checking params');
-
       if (param.id) {
          const test = getTestDetails(param.id);
 
@@ -53,6 +58,11 @@ function Practice(): React.ReactElement {
       }
    }, [param]);
 
+   useEffect(() => {
+      SyntaxHighlighter.registerLanguage('cs', csharp);
+      SyntaxHighlighter.highlightAll();
+   }, [questions, validation]);
+
    function handleFormSubmit(event: any): void {
       event.preventDefault();
 
@@ -66,8 +76,9 @@ function Practice(): React.ReactElement {
       score /= questions.length;
       setTestScore(score);
 
-      if (score > 0 && testDetails) {
+      if (score >= 0.25 && testDetails) {
          updateScoreCategory(testDetails.category, score);
+         updateTestScore(testDetails.id, score);
       }
 
       setValidation(true);
@@ -163,8 +174,17 @@ function Practice(): React.ReactElement {
                                                 setQuestions([...questions]);
                                              }}
                                           >
-                                             <pre>
-                                                <code>{option}</code>
+                                             <pre
+                                                className="language-cs"
+                                                style={{
+                                                   maxWidth: '95vw',
+                                                   background:
+                                                      'transparent !important',
+                                                }}
+                                             >
+                                                <code className="bg-black color-white rounded">
+                                                   {option}
+                                                </code>
                                              </pre>
                                           </Radio>
                                        );

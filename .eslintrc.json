@@ -4,12 +4,7 @@
       "es2021": true,
       "node": true
    },
-   "extends": [
-      "eslint:recommended",
-      "plugin:react/recommended",
-      "google",
-      "prettier"
-   ],
+   "extends": ["eslint:recommended", "plugin:react/recommended", "google", "prettier"],
    "parserOptions": {
       "ecmaFeatures": {
          "jsx": true

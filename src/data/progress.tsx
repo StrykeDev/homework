@@ -1,162 +1,95 @@
-import { storage } from '../component/Utilities';
+import { LocalStorage } from '../services/LocalStorage';
+
+import { PROGRESS, TESTS } from '../utils/constants';
 
 import { ECourseType, getCourses, ICourse } from './courses';
-import { getTest } from './tests';
 
-// Local storage entries
-const PROGRESS = 'progress';
-const TESTS = 'tests';
+export type TProgress = Map<string, number>;
 
-export interface IProgress extends ICourse {
-   value: number;
+export function getProgress(): TProgress {
+   return LocalStorage.getMap(PROGRESS);
 }
 
-export function getProgress(): IProgress[] {
-   return JSON.parse(storage.get(PROGRESS) || '[]');
-}
-
-export function initProgress(): void {
-   const progress: IProgress[] = getProgress();
-   if (progress.length) {
-      const courses = getCourses().map((course: ICourse) => {
-         const result = progress.findIndex((data: IProgress) => {
-            return data.id === course.id;
-         });
-         if (result === -1) {
-            return {
-               id: course.id,
-               category: course.category,
-               name: course.name,
-               value: 0,
-            };
-         }
-      });
-
-      const newProgress = [...progress, ...courses];
-      storage.set(PROGRESS, JSON.stringify(newProgress));
-   } else {
-      const newProgress = getCourses().map((course: ICourse) => {
-         return {
-            id: course.id,
-            category: course.category,
-            name: course.name,
-            value: 0,
-         };
-      });
-      storage.set(PROGRESS, JSON.stringify(newProgress));
-   }
+export function getScore(id: string): number {
+   const progress = getProgress();
+   return progress.get(id) || 0;
 }
 
 export function updateScore(id: string, value: number): void {
-   const progress = getProgress().map((data) => {
-      if (data.id === id) {
-         data.value = value;
-      }
-      return data;
-   });
-   storage.set(PROGRESS, JSON.stringify(progress));
-}
-
-export function updateScoreCategory(
-   category: ECourseType,
-   value: number,
-): void {
-   const progress = getProgress().map((data) => {
-      if (data.category === category) {
-         data.value = value;
-      }
-      return data;
-   });
-   storage.set(PROGRESS, JSON.stringify(progress));
-}
-
-export function getScore(id: string): IProgress {
-   const progress = getProgress().find((data) => {
-      if (data.id === id) {
-         return data;
-      }
-   });
-
-   if (progress) {
-      return progress;
-   } else {
-      throw new Error(`Invalid score id: '${id}'`);
-   }
-}
-
-export interface IProgressSummery {
-   category: string;
-   value: number;
-}
-
-export function getProgressSummery(): IProgressSummery[] {
    const progress = getProgress();
-   const progressSummery: IProgressSummery[] = [];
+   progress.set(id, value);
+   LocalStorage.setMap(PROGRESS, progress);
+}
 
-   Object.values(ECourseType).forEach((type) => {
-      const values: number[] = [];
+export function getProgressSummary(): TProgress {
+   const progress = getProgress();
+   const courses = getCourses();
+   const summary = new Map();
 
-      progress.forEach((course) => {
+   Object.values(ECourseType).forEach((type: string) => {
+      let score = 0;
+      let divider = 0;
+      courses.forEach((course: ICourse) => {
          if (course.category === type) {
-            values.push(course.value);
+            score += progress.get(course.id) || 0;
+            divider++;
          }
       });
-
-      let value = 0;
-      if (values.length) {
-         value = values.reduce((total, value) => total + value) / values.length;
-      }
-      progressSummery.push({ category: type, value: value });
+      summary.set(type, score / divider);
    });
 
-   return progressSummery;
+   return summary;
 }
 
-export function getProgressSummeryOverall(): number {
-   const summery = getProgressSummery();
+export function getProgressOverall(): number {
+   const summary = getProgressSummary();
+   const scores = summary.values();
+
+   let done = undefined;
+   let value = 0;
    let sum = 0;
-   summery.forEach((item: IProgressSummery) => {
-      sum += item.value;
-   });
-   return sum / summery.length;
+
+   do {
+      ({ value, done } = scores.next());
+      sum += value || 0;
+   } while (!done);
+
+   return sum / summary.size;
 }
 
-export interface ITestScore extends ICourse {
+export interface ITestScore {
    value: number;
    best: number;
    last: number;
 }
 
-export function getTestsScores(): ITestScore[] {
-   return JSON.parse(storage.get(TESTS) || '[]');
+export type TTestScore = Map<string, ITestScore>;
+
+export function getTestsScores(): TTestScore {
+   return LocalStorage.getMap(TESTS);
 }
 
-export function getTestScore(id: string): ITestScore | undefined {
-   const test = getTestsScores().find((test) => {
-      return test.id === id;
-   });
-   if (test) {
-      return test;
-   }
-   return undefined;
+export function getTestScore(id: string): ITestScore | null {
+   const scores = getTestsScores();
+   return scores.get(id) || null;
 }
 
 export function updateTestScore(id: string, value: number): void {
-   const testsScore = getTestsScores();
-   const testIndex = testsScore.findIndex((test) => {
-      return test.id === id;
-   });
-
-   if (testIndex !== -1) {
-      testsScore[testIndex].last = testsScore[testIndex].value;
-      testsScore[testIndex].value = value;
-      if (testsScore[testIndex].best < value) {
-         testsScore[testIndex].best = value;
+   const scores = getTestsScores();
+   let score = scores.get(id);
+   if (score) {
+      score.last = score.value;
+      score.value = value;
+      if (score.best < value) {
+         score.best = value;
       }
    } else {
-      const test = getTest(id);
-      testsScore.push({ ...test, value: value, best: value, last: 0 });
+      score = {
+         value: value,
+         best: value,
+         last: 0,
+      };
    }
-
-   storage.set(TESTS, JSON.stringify(testsScore));
+   scores.set(id, score);
+   LocalStorage.setMap(TESTS, scores);
 }

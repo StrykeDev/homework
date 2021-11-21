@@ -3,42 +3,21 @@ import { Link } from 'react-router-dom';
 import { v4 as uuid } from 'uuid';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-import { getIconByValue } from '../../component/Utilities';
-import { ProgressCircle } from '../../component/Inputs';
+import { ProgressCircle } from '../components/forms/IO';
 
-import {
-   ECourseType,
-   getCourses,
-   getIconByType,
-   ICourse,
-} from '../../data/courses';
-import { getTests } from '../../data/tests';
-import {
-   getProgressSummery,
-   getProgressSummeryOverall,
-   getTestScore,
-   IProgressSummery,
-} from '../../data/progress';
+import { PATH_LEARN, PATH_PRACTICE } from '../utils/constants';
+import { Icon } from '../utils/utilities';
 
-import { PATH_INDEX, userContext } from '../../App';
+import { ECourseType, getCourses, ICourse } from '../data/courses';
+import { getTests } from '../data/tests';
+import { getProgressOverall, getProgressSummary, getTestScore } from '../data/Progress';
 
-import './Home.css';
+import { userContext } from '../App';
+
+import '../styles/Home.css';
 
 function Home(): React.ReactElement {
    const user = useContext(userContext);
-
-   function renderStats(): React.ReactElement[] {
-      const out = getProgressSummery().map((item: IProgressSummery) => {
-         return (
-            <div key={uuid()} className="progress-card">
-               <h5>{item.category}</h5>
-               <ProgressCircle value={item.value} />
-            </div>
-         );
-      });
-
-      return out;
-   }
 
    function renderLearnCards(): React.ReactElement[] {
       const out: React.ReactElement[] = [];
@@ -53,7 +32,7 @@ function Home(): React.ReactElement {
          filtered.forEach((course: ICourse) => {
             listItems.push(
                <li key={uuid()}>
-                  <Link to={PATH_INDEX + '/learn/' + course.id}>
+                  <Link className={course.available ? '' : 'disabled'} to={PATH_LEARN + course.id}>
                      {course.name}
                   </Link>
                </li>,
@@ -64,7 +43,7 @@ function Home(): React.ReactElement {
             <div key={uuid()} className="bg-normal rounded p-1">
                <h5 className="d-flex justify-content-between">
                   {type}
-                  <FontAwesomeIcon icon={getIconByType(type)} />
+                  <FontAwesomeIcon icon={Icon.byType(type)} />
                </h5>
                <ul className="list-unstyled">{listItems}</ul>
             </div>,
@@ -83,17 +62,18 @@ function Home(): React.ReactElement {
          out.push(
             <Link
                key={uuid()}
-               className="btn bg-normal m-0 p-1 d-flex align-items-center justify-content-between"
-               to={PATH_INDEX + '/practice/' + test.id}
+               className={
+                  test.available
+                     ? 'btn bg-normal m-0 p-1 d-flex align-items-center justify-content-between'
+                     : 'btn bg-normal m-0 p-1 d-flex align-items-center justify-content-between disabled'
+               }
+               to={PATH_PRACTICE + test.id}
             >
                <span>
                   <h5>{test.category}</h5>
                   <p>{test.name}</p>
                </span>
-               <FontAwesomeIcon
-                  icon={getIconByValue(testScore?.value || 0)}
-                  size="3x"
-               />
+               <FontAwesomeIcon icon={Icon.byValue(testScore?.value || 0)} size="3x" />
             </Link>,
          );
       });
@@ -107,19 +87,24 @@ function Home(): React.ReactElement {
             <header className="home-header">
                <div>
                   <div className="my-4">
-                     <h1>Hi {user}!</h1>
+                     <h1>Hi {user || 'Visitor'}!</h1>
                      <h4>What are we learning today?</h4>
                   </div>
-                  <div className="progress-deck">{renderStats()}</div>
+                  <div className="progress-deck">
+                     {Array.from(getProgressSummary()).map(([key, value]) => {
+                        return (
+                           <div key={uuid()} className="progress-card">
+                              <h5>{key}</h5>
+                              <ProgressCircle value={value} />
+                           </div>
+                        );
+                     })}
+                  </div>
                </div>
 
                <div className="progress-overview">
                   <div className="circle bg-light">
-                     <ProgressCircle
-                        value={getProgressSummeryOverall()}
-                        size={275}
-                        thickness={16 * 5}
-                     />
+                     <ProgressCircle value={getProgressOverall()} size={17} thickness={5} label="Overall" />
                   </div>
                </div>
             </header>

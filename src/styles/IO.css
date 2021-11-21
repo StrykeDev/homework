@@ -1,0 +1,63 @@
+/* Radio */
+.io.radio {
+   display: flex;
+   align-items: center;
+   cursor: pointer;
+   user-select: none;
+}
+
+.io.radio .radio-dot {
+   display: inline-block;
+   width: 1em;
+   height: 1em;
+   margin: 0.75em;
+   border: var(--bg-light) solid 0.25em;
+   border-radius: 50%;
+   background-color: var(--btn-normal);
+   transition: background-color var(--transition-quick);
+}
+
+.io.radio input {
+   display: none;
+}
+
+.io.radio input:hover ~ .radio-dot {
+   background-color: var(--btn-light);
+}
+
+.io.radio input:active ~ .radio-dot,
+.io.radio input:disabled ~ .radio-dot {
+   background-color: var(--btn-dark);
+}
+
+.io.radio input:checked ~ .radio-dot {
+   background-color: var(--accent-color);
+}
+
+.io.radio .radio-dot.valid {
+   background-color: var(--accent-color) !important;
+}
+
+.io.radio .radio-dot.invalid {
+   background-color: var(--danger-color) !important;
+}
+
+/* ProgressCircle */
+.io.progress {
+   position: relative;
+}
+
+.io.progress svg {
+   width: 100%;
+   height: 100%;
+}
+
+.io.progress circle {
+   fill: none;
+   stroke: var(--btn-normal);
+   stroke-linecap: round;
+}
+
+.io.progress circle:last-child {
+   stroke: var(--accent-color);
+}

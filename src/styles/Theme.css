@@ -41,20 +41,22 @@ body {
    --text-light: #ffffff;
    --text-normal: #c0c0c0;
    --text-dark: #757575;
-   --btn-light: #fafbff1f;
-   --btn-normal: #fafbff15;
-   --btn-dark: #08080815;
+   --btn-light: #fafbff32;
+   --btn-normal: #80808032;
+   --btn-dark: #08080832;
 
+   overflow: auto scroll;
+   min-height: 100vh;
+   max-width: 100vw;
    margin: 0;
    background-color: var(--bg-dark);
    color: var(--text-normal);
    font-size: 0.95rem;
    font-family: Roboto, sans-serif;
-   scroll-behavior: smooth;
-
-   transition: color var(--transition-quick),
-      background-color var(--transition-quick),
+   user-select: none;
+   transition: color var(--transition-quick), background-color var(--transition-quick),
       font-size var(--transition-normal);
+   scroll-behavior: smooth;
 }
 
 body.light-theme {
@@ -64,13 +66,17 @@ body.light-theme {
    --text-light: #0e0e0e;
    --text-normal: #585858;
    --text-dark: #818181;
-   --btn-light: #0808081f;
-   --btn-normal: #08080815;
-   --btn-dark: #fafbff15;
+   --btn-light: #e9e9e932;
+   --btn-normal: #08080832;
+   --btn-dark: #08080832;
 }
 
 body.font-large {
    font-size: 1.25rem;
+}
+
+article {
+   user-select: auto;
 }
 
 .container {
@@ -217,8 +223,7 @@ button,
 input[type='button'] {
    background-color: transparent;
    cursor: pointer;
-   transition: color var(--transition-quick),
-      background-color var(--transition-quick);
+   transition: color var(--transition-quick), background-color var(--transition-quick);
 }
 
 input,
@@ -227,8 +232,8 @@ button,
 .btn {
    min-width: 2.5em;
    min-height: 2.5em;
-   margin: 0.25em;
-   padding: 0 1em;
+   margin: 0.5em;
+   padding: 0.25em 1em;
    border: none;
    border-radius: var(--border-radius);
    color: inherit;
@@ -244,8 +249,8 @@ input[type='radio'] {
 .btn {
    background-color: var(--btn-normal);
    cursor: pointer;
-   transition: color var(--transition-quick),
-      background-color var(--transition-quick);
+   transition: color var(--transition-quick), background-color var(--transition-quick);
+   text-transform: capitalize;
 }
 
 .btn:hover,
@@ -264,21 +269,27 @@ input[type='radio'] {
 .color-dark {
    color: var(--text-dark);
 }
+
 .color-normal {
    color: var(--text-normal);
 }
+
 .color-light {
    color: var(--text-light);
 }
+
 .color-accent {
    color: var(--accent-color);
 }
+
 .color-secondary {
    color: var(--secondary-color);
 }
+
 .color-black {
    color: black;
 }
+
 .color-white {
    color: white;
 }
@@ -286,21 +297,27 @@ input[type='radio'] {
 .bg-dark {
    background-color: var(--bg-dark);
 }
+
 .bg-normal {
    background-color: var(--bg-normal);
 }
+
 .bg-light {
    background-color: var(--bg-light);
 }
+
 .bg-accent {
    background-color: var(--accent-color);
 }
+
 .bg-secondary {
    background-color: var(--secondary-color);
 }
+
 .bg-black {
    background-color: #141414;
 }
+
 .bg-white {
    background-color: #e9e9e9;
 }
@@ -316,6 +333,16 @@ input[type='radio'] {
 
 .disable-select {
    user-select: none;
+}
+
+.disabled {
+   color: var(--text-dark);
+   background-color: var(--btn-dark);
+   pointer-events: none;
+}
+
+.enable-select {
+   user-select: auto;
 }
 
 .list-unstyled {

@@ -4,13 +4,14 @@ import { v4 as uuid } from 'uuid';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faGraduationCap } from '@fortawesome/free-solid-svg-icons';
 
-import { ECourseType, getCourses, ICourse } from '../../data/courses';
-import { getTests } from '../../data/tests';
+import { LocalStorage } from '../../../services/LocalStorage';
 
-import { PATH_INDEX } from '../../App';
+import { PATH_INDEX, PATH_LEARN, PATH_PRACTICE } from '../../../utils/constants';
 
-import './MainNav.css';
-import { storage } from '../Utilities';
+import { ECourseType, getCourses, ICourse } from '../../../data/courses';
+import { getTests } from '../../../data/tests';
+
+import '../../../styles/MainNav.css';
 
 function MainNav(): React.ReactElement {
    const [show, setShow] = useState(false);
@@ -30,7 +31,7 @@ function MainNav(): React.ReactElement {
          filtered.forEach((course: ICourse) => {
             listItems.push(
                <li key={uuid()}>
-                  <Link to={PATH_INDEX + '/learn/' + course.id}>
+                  <Link className={course.available ? '' : 'disabled'} to={PATH_LEARN + course.id}>
                      {course.name}
                   </Link>
                </li>,
@@ -61,7 +62,7 @@ function MainNav(): React.ReactElement {
          filtered.forEach((test: ICourse) => {
             listItems.push(
                <li key={uuid()}>
-                  <Link to={PATH_INDEX + '/practice/' + test.id}>
+                  <Link className={test.available ? '' : 'disabled'} to={PATH_PRACTICE + test.id}>
                      {test.name}
                   </Link>
                </li>,
@@ -100,18 +101,18 @@ function MainNav(): React.ReactElement {
    }
 
    const THEME = 'theme';
-   const [theme, setTheme] = useState(storage.get(THEME));
+   const [theme, setTheme] = useState(LocalStorage.getItem(THEME));
 
    useEffect(() => {
       switch (theme) {
          case 'light':
             document.body.classList.add('light-theme');
-            storage.set(THEME, 'light');
+            LocalStorage.setItem(THEME, 'light');
             break;
 
          default:
             document.body.classList.remove('light-theme');
-            storage.set(THEME, 'dark');
+            LocalStorage.setItem(THEME, 'dark');
             break;
       }
    }, [theme]);
@@ -129,18 +130,18 @@ function MainNav(): React.ReactElement {
    }
 
    const FONT = 'font';
-   const [font, setFont] = useState(storage.get(FONT));
+   const [font, setFont] = useState(LocalStorage.getItem(FONT));
 
    useEffect(() => {
       switch (font) {
          case 'large':
             document.body.classList.add('font-large');
-            storage.set(FONT, 'large');
+            LocalStorage.setItem(FONT, 'large');
             break;
 
          default:
             document.body.classList.remove('font-large');
-            storage.set(FONT, 'normal');
+            LocalStorage.setItem(FONT, 'normal');
             break;
       }
    }, [font]);
@@ -167,9 +168,7 @@ function MainNav(): React.ReactElement {
 
    return (
       <nav
-         className={`main-nav disable-select ${show ? 'show bg-normal' : ''} ${
-            location.pathname !== PATH_INDEX ? 'bg-normal' : ''
-         }`}
+         className={`main-nav ${show ? 'show bg-normal' : ''} ${location.pathname !== PATH_INDEX ? 'bg-normal' : ''}`}
       >
          <div className="container">
             <nav className="nav-items">

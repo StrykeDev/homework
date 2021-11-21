@@ -1,0 +1,40 @@
+.app {
+   position: relative;
+   display: grid;
+   overflow: hidden;
+   min-height: 100vh;
+}
+
+.overlay-container {
+   position: fixed;
+   top: 0;
+   left: 0;
+   right: 0;
+   bottom: 0;
+   display: flex;
+   flex-direction: row;
+   align-items: center;
+   justify-content: center;
+   border-bottom: 5px solid var(--accent-color);
+   font-size: 0.75rem;
+   pointer-events: none;
+   z-index: 1000;
+}
+
+.overlay-container * {
+   pointer-events: all;
+}
+
+.preview-warning {
+   position: absolute;
+   bottom: 0;
+   text-align: center;
+   padding: 1em 2em;
+   background-color: var(--accent-color);
+   border-radius: var(--border-radius) var(--border-radius) 0 0;
+   color: white !important;
+}
+
+.title {
+   font-weight: 400;
+}

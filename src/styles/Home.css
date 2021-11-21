@@ -13,7 +13,7 @@
 .progress-deck {
    display: grid;
    grid-template-columns: 1fr 1fr 1fr;
-   gap: 1em 4em;
+   gap: 1em 2em;
 }
 
 .progress-deck .progress-card {
@@ -26,7 +26,7 @@
 
 .home-header {
    display: grid;
-   grid-template-columns: 1fr 35em;
+   grid-template-columns: 1fr 38em;
    gap: 1em;
    max-width: 95vw;
 }
@@ -43,7 +43,7 @@
    display: flex;
    align-items: center;
    justify-content: center;
-   width: 42rem;
+   width: 42em;
    border-radius: 50%;
    aspect-ratio: 1 / 1;
 }

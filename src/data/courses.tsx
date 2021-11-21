@@ -1,13 +1,4 @@
-import { IconProp } from '@fortawesome/fontawesome-svg-core';
-import {
-   faBolt,
-   faCode,
-   faFont,
-   faHandPointLeft,
-   faSitemap,
-   faStream,
-   faWrench,
-} from '@fortawesome/free-solid-svg-icons';
+import { Exception } from '../utils/Exception';
 
 export enum ECourseType {
    Types = 'Types',
@@ -18,29 +9,11 @@ export enum ECourseType {
    Events = 'Events',
 }
 
-export function getIconByType(type: ECourseType | string): IconProp {
-   switch (type) {
-      case ECourseType.Types:
-         return faFont;
-      case ECourseType.Operators:
-         return faWrench;
-      case ECourseType.Pointers:
-         return faHandPointLeft;
-      case ECourseType.Objects:
-         return faSitemap;
-      case ECourseType.Functions:
-         return faStream;
-      case ECourseType.Events:
-         return faBolt;
-      default:
-         return faCode;
-   }
-}
-
 export interface ICourse {
    id: string;
    category: ECourseType;
    name: string;
+   available: boolean;
 }
 
 export interface ICourseDetails extends ICourse {
@@ -60,6 +33,7 @@ const courses: ICourseDetails[] = [
       id: 'primitive-types',
       category: ECourseType.Types,
       name: 'Primitive',
+      available: true,
       title: 'Primitive types',
       description: `Primitive types are the most basic types.`,
       sections: [
@@ -114,6 +88,7 @@ const courses: ICourseDetails[] = [
       id: 'complex-types',
       category: ECourseType.Types,
       name: 'Complex',
+      available: false,
       title: 'Complex types',
       description: `This course is under construction.`,
       sections: [],
@@ -122,6 +97,7 @@ const courses: ICourseDetails[] = [
       id: 'math-operators',
       category: ECourseType.Operators,
       name: 'Math',
+      available: true,
       title: 'Math operators',
       description: `Math operators allow us to preform math operations.`,
       sections: [
@@ -188,6 +164,7 @@ const courses: ICourseDetails[] = [
       id: 'condition-operators',
       category: ECourseType.Operators,
       name: 'Condition',
+      available: true,
       title: 'Condition operators',
       description: `Condition operators test the values and return a bool.`,
       sections: [
@@ -262,6 +239,7 @@ const courses: ICourseDetails[] = [
       id: 'basic-pointers',
       category: ECourseType.Pointers,
       name: 'Overview',
+      available: false,
       title: 'Pointers overview',
       description: `This course is under construction.`,
       sections: [],
@@ -270,6 +248,7 @@ const courses: ICourseDetails[] = [
       id: 'advanced-pointers',
       category: ECourseType.Pointers,
       name: 'Advanced',
+      available: false,
       title: 'Advanced overview',
       description: `This course is under construction.`,
       sections: [],
@@ -278,6 +257,7 @@ const courses: ICourseDetails[] = [
       id: 'objects-overview',
       category: ECourseType.Objects,
       name: 'Overview',
+      available: false,
       title: 'Objects overview',
       description: `This course is under construction.`,
       sections: [],
@@ -286,6 +266,7 @@ const courses: ICourseDetails[] = [
       id: 'objects-inheritance',
       category: ECourseType.Objects,
       name: 'Inheritance',
+      available: false,
       title: 'Object inheritance',
       description: `This course is under construction.`,
       sections: [],
@@ -294,6 +275,7 @@ const courses: ICourseDetails[] = [
       id: 'functions-overview',
       category: ECourseType.Functions,
       name: 'Overview',
+      available: false,
       title: 'Functions overview',
       description: `This course is under construction.`,
       sections: [],
@@ -302,6 +284,7 @@ const courses: ICourseDetails[] = [
       id: 'recursive-functions',
       category: ECourseType.Functions,
       name: 'Recursion',
+      available: false,
       title: 'Recursive functions',
       description: `This course is under construction.`,
       sections: [],
@@ -310,6 +293,7 @@ const courses: ICourseDetails[] = [
       id: 'events-overview',
       category: ECourseType.Events,
       name: 'Overview',
+      available: false,
       title: 'Events overview',
       description: `This course is under construction.`,
       sections: [],
@@ -318,6 +302,7 @@ const courses: ICourseDetails[] = [
       id: 'async-events',
       category: ECourseType.Events,
       name: 'Asynchronous',
+      available: false,
       title: 'Async events',
       description: `This course is under construction.`,
       sections: [],
@@ -325,7 +310,7 @@ const courses: ICourseDetails[] = [
 ];
 
 export function getCourses(): ICourse[] {
-   return courses;
+   return [...courses];
 }
 
 export function getCourse(id: string): ICourse {
@@ -336,7 +321,7 @@ export function getCourse(id: string): ICourse {
    if (course) {
       return course;
    } else {
-      throw new Error(`Invalid course requested id: '${id}'.`);
+      throw Exception.idNotFound('course', id);
    }
 }
 
@@ -348,6 +333,6 @@ export function getCourseDetails(id: string): ICourseDetails {
    if (course) {
       return course;
    } else {
-      throw new Error(`Invalid course requested id: '${id}'.`);
+      throw Exception.idNotFound('course', id);
    }
 }

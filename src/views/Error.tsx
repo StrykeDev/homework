@@ -1,7 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router';
 
-import { PATH_INDEX } from '../App';
+import { PATH_INDEX } from '../utils/constants';
 
 function Error(): React.ReactElement {
    const navigator = useNavigate();

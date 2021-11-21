@@ -1,8 +1,11 @@
+import { Exception } from '../utils/Exception';
+
 import { ECourseType, ICourse } from './courses';
 
 export interface ITestDetails extends ICourse {
    title: string;
    description: string;
+   subjects: string[];
    questions: ITestQuestion[];
 }
 
@@ -19,25 +22,20 @@ const tests: ITestDetails[] = [
       id: 'types-test',
       category: ECourseType.Types,
       name: 'Declaration and usage',
+      available: true,
       title: 'Types declaration and usage',
       description: 'This test focus on types declaration and usage.',
+      subjects: ['primitive-types', 'complex-types'],
       questions: [
          {
-            question:
-               'Which variable declaration is most suited for counting whole apples?',
+            question: 'Which variable declaration is most suited for counting whole apples?',
             description: '',
-            options: [
-               'double apples = 3;',
-               'apples = 3;',
-               'int apples = 3;',
-               'apples = 3.0;',
-            ],
+            options: ['double apples = 3;', 'apples = 3;', 'int apples = 3;', 'apples = 3.0;'],
             answer: 2,
             hint: 'We want to declare a variable that store whole numbers.',
          },
          {
-            question:
-               'Which variable declaration is most suited for an account balance?',
+            question: 'Which variable declaration is most suited for an account balance?',
             description: '',
             options: [
                'balance = 32163.51;',
@@ -51,12 +49,7 @@ const tests: ITestDetails[] = [
          {
             question: 'Which variable declaration is correct for type int?',
             description: '',
-            options: [
-               'int dogs = 2;',
-               'int dogs = 2i;',
-               'int dogs = 2f;',
-               'int dogs = 2d;',
-            ],
+            options: ['int dogs = 2;', 'int dogs = 2i;', 'int dogs = 2f;', 'int dogs = 2d;'],
             answer: 0,
          },
          {
@@ -84,12 +77,7 @@ const tests: ITestDetails[] = [
          {
             question: 'Which variable declaration is correct for type char?',
             description: '',
-            options: [
-               'char letter = A;',
-               'char letter = "A";',
-               "char letter = 'A';",
-               'char letter = `A`;',
-            ],
+            options: ['char letter = A;', 'char letter = "A";', "char letter = 'A';", 'char letter = `A`;'],
             answer: 2,
          },
          {
@@ -121,25 +109,20 @@ const tests: ITestDetails[] = [
       id: 'operators-test',
       category: ECourseType.Operators,
       name: 'Math and condition usage',
+      available: true,
       title: 'Operators usage',
       description: 'This test focus on math and condition operators.',
+      subjects: ['math-operators', 'condition-operators'],
       questions: [
          {
-            question:
-               'Which statement will result in "x = y + 1" AND "y = y + 1"?',
+            question: 'Which statement will result in "x = y + 1" AND "y = y + 1"?',
             description: '',
-            options: [
-               'double x = y;',
-               'double x = y + 1;',
-               'double x = y++;',
-               'double x = ++y;',
-            ],
+            options: ['double x = y;', 'double x = y + 1;', 'double x = y++;', 'double x = ++y;'],
             answer: 3,
             hint: 'We want to increase "y" by 1 and pass it to "x".',
          },
          {
-            question:
-               'Which statement will NOT give us the message "Hello world"?',
+            question: 'Which statement will NOT give us the message "Hello world"?',
             description: '',
             options: [
                'Console.WriteLine("Hello world");',
@@ -153,12 +136,7 @@ const tests: ITestDetails[] = [
          {
             question: 'Which condition is true?',
             description: '',
-            options: [
-               'true != true',
-               'true == false',
-               'true != !true',
-               'false == !false',
-            ],
+            options: ['true != true', 'true == false', 'true != !true', 'false == !false'],
             answer: 2,
          },
          {
@@ -244,7 +222,9 @@ const tests: ITestDetails[] = [
       id: 'pointers-test',
       category: ECourseType.Pointers,
       name: 'Declaration and usage',
+      available: false,
       title: 'Pointers declaration and usage',
+      subjects: [],
       description: 'This test is under construction.',
       questions: [],
    },
@@ -252,7 +232,9 @@ const tests: ITestDetails[] = [
       id: 'objects-test',
       category: ECourseType.Objects,
       name: 'Declaration, usage and inheritance',
+      available: false,
       title: 'Objects declaration, usage and inheritance',
+      subjects: [],
       description: 'This test is under construction.',
       questions: [],
    },
@@ -260,22 +242,26 @@ const tests: ITestDetails[] = [
       id: 'functions-test',
       category: ECourseType.Functions,
       name: 'Declaration and recursion',
+      available: false,
       title: 'Functions declaration and recursion',
       description: 'This test is under construction.',
+      subjects: [],
       questions: [],
    },
    {
       id: 'events-test',
       category: ECourseType.Events,
       name: 'Declaration and usage',
+      available: false,
       title: 'Events declaration and usage',
       description: 'This test is under construction.',
+      subjects: [],
       questions: [],
    },
 ];
 
 export function getTests(): ICourse[] {
-   return tests;
+   return [...tests];
 }
 
 export function getTest(id: string): ICourse {
@@ -286,7 +272,7 @@ export function getTest(id: string): ICourse {
    if (course) {
       return course;
    } else {
-      throw new Error(`Invalid test requested id: '${id}'.`);
+      throw Exception.idNotFound('test', id);
    }
 }
 
@@ -298,6 +284,6 @@ export function getTestDetails(id: string): ITestDetails {
    if (test) {
       return test;
    } else {
-      throw new Error(`Invalid test requested id: '${id}'.`);
+      throw Exception.idNotFound('test', id);
    }
 }

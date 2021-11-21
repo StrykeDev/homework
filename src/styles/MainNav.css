@@ -4,9 +4,8 @@
 
    overflow: hidden;
    height: var(--nav-height);
-   transition: height var(--transition-normal),
-      background-color var(--transition-quick);
    white-space: nowrap;
+   transition: height var(--transition-normal), background-color var(--transition-quick);
 }
 
 .main-nav.show {

@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { Navigate, useNavigate, useParams } from 'react-router';
+import { useNavigate, useParams } from 'react-router';
 import { v4 as uuid } from 'uuid';
 import SyntaxHighlighter from 'highlight.js/lib/core';
 import csharp from 'highlight.js/lib/languages/csharp';
 import 'highlight.js/styles/vs2015.css';
+
 import ScoreSelector from '../components/forms/ScoreSelector';
 
 import { Text } from '../utils/utilities';
@@ -36,38 +37,36 @@ function Learn(): React.ReactElement {
 
    if (course) {
       return (
-         <div className="container">
-            <article className="p-1">
-               <h2>{course.title}</h2>
-               <p>{Text.toParagraph(course.description)}</p>
-               {course.sections.map((section: ICourseSection) => {
-                  return (
-                     <section key={uuid()}>
-                        <hr />
-                        <h3>{section.title}</h3>
-                        <p>{Text.toParagraph(section.description)}</p>
+         <article className="container p-1">
+            <h2>{course.title}</h2>
+            <p>{Text.toParagraph(course.description)}</p>
+            {course.sections.map((section: ICourseSection) => {
+               return (
+                  <section key={uuid()}>
+                     <hr />
+                     <h3>{section.title}</h3>
+                     <p>{Text.toParagraph(section.description)}</p>
 
-                        {section.example ? (
-                           <pre className="language-cs" style={{ maxWidth: '95vw' }}>
-                              <code className="bg-black color-white rounded">{section.example}</code>
-                           </pre>
-                        ) : (
-                           ''
-                        )}
-                     </section>
-                  );
-               })}
+                     {section.example ? (
+                        <pre className="language-cs" style={{ maxWidth: '95vw' }}>
+                           <code className="bg-normal color-light rounded">{section.example}</code>
+                        </pre>
+                     ) : (
+                        ''
+                     )}
+                  </section>
+               );
+            })}
 
-               <hr />
-               <ScoreSelector courseId={course.id} />
-               <hr className="hide" />
-            </article>
-         </div>
+            <hr />
+            <ScoreSelector courseId={course.id} />
+            <hr className="hide" />
+         </article>
       );
    } else {
       return (
-         <div className="dialog text-center ">
-            <h2 className="my-4">Loading...</h2>
+         <div className="dialog text-center my-4 py-4">
+            <h2>Loading...</h2>
             <p>Please wait.</p>
          </div>
       );

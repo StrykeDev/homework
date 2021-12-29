@@ -1,23 +1,43 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { v4 as uuid } from 'uuid';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faGraduationCap } from '@fortawesome/free-solid-svg-icons';
 
-import { LocalStorage } from '../../../services/LocalStorage';
-
 import { PATH_INDEX, PATH_LEARN, PATH_PRACTICE } from '../../../utils/constants';
 
+import { ThemeColorContext, ThemeFontContext } from '../../../data/ThemeContext';
 import { ECourseType, getCourses, ICourse } from '../../../data/courses';
 import { getTests } from '../../../data/tests';
 
 import '../../../styles/MainNav.css';
 
 function MainNav(): React.ReactElement {
-   const [show, setShow] = useState(false);
-   const [tab, setTab] = useState(-1);
    const location = useLocation();
+   const { toggleColor } = useContext(ThemeColorContext);
+   const { toggleFont } = useContext(ThemeFontContext);
+   const [background, setBackground] = useState(true);
+   const [scroll, setScroll] = useState(window.scrollY > 10);
+   const [open, setOpen] = useState(false);
+   const [tab, setTab] = useState(-1);
 
+   useEffect(() => {
+      document.body.addEventListener('click', (event) => {
+         if (event.target instanceof HTMLAnchorElement) {
+            const target = event.target as HTMLAnchorElement;
+            if (target.classList.contains('nav-link')) {
+               return;
+            }
+         }
+         setOpen(false);
+      });
+
+      window.addEventListener('scroll', () => {
+         setScroll(window.scrollY > 10);
+      });
+   }, []);
+
+   // Tabs
    function renderLearnTab() {
       const out: React.ReactElement[] = [];
       const courses = getCourses();
@@ -80,12 +100,12 @@ function MainNav(): React.ReactElement {
       return out;
    }
 
-   function getTab(): React.ReactElement {
+   function renderTabs(): React.ReactElement {
       switch (tab) {
          case 0:
-            return <div className="drop-list">{renderLearnTab()}</div>;
+            return <div className="nav-details-items">{renderLearnTab()}</div>;
          case 1:
-            return <div className="drop-list">{renderPracticeTab()}</div>;
+            return <div className="nav-details-items">{renderPracticeTab()}</div>;
          default:
             return <div></div>;
       }
@@ -94,98 +114,82 @@ function MainNav(): React.ReactElement {
    function handleTabChange(newTab: number) {
       if (tab != newTab) {
          setTab(newTab);
-         setShow(true);
+         setOpen(true);
       } else {
-         setShow(!show);
+         setOpen(!open);
       }
    }
 
-   const THEME = 'theme';
-   const [theme, setTheme] = useState(LocalStorage.getItem(THEME));
+   // Nav open
+   const nav = useRef<HTMLDivElement>(null);
 
    useEffect(() => {
-      switch (theme) {
-         case 'light':
-            document.body.classList.add('light-theme');
-            LocalStorage.setItem(THEME, 'light');
-            break;
+      nav.current?.classList.add('open-details-active');
 
-         default:
-            document.body.classList.remove('light-theme');
-            LocalStorage.setItem(THEME, 'dark');
-            break;
+      const handle = setTimeout(() => {
+         nav.current?.classList.remove('open-details-active');
+      }, 500);
+
+      if (open) {
+         nav.current?.classList.add('open-details');
+      } else {
+         nav.current?.classList.remove('open-details');
       }
-   }, [theme]);
 
-   function handleToggleTheme() {
-      switch (theme) {
-         case 'dark':
-            setTheme('light');
-            break;
-
-         default:
-            setTheme('dark');
-            break;
-      }
-   }
-
-   const FONT = 'font';
-   const [font, setFont] = useState(LocalStorage.getItem(FONT));
+      return () => {
+         clearTimeout(handle);
+      };
+   }, [open]);
 
    useEffect(() => {
-      switch (font) {
-         case 'large':
-            document.body.classList.add('font-large');
-            LocalStorage.setItem(FONT, 'large');
-            break;
-
-         default:
-            document.body.classList.remove('font-large');
-            LocalStorage.setItem(FONT, 'normal');
-            break;
+      if (location.pathname === PATH_INDEX && !open && !scroll) {
+         setBackground(false);
+      } else {
+         setBackground(true);
       }
-   }, [font]);
-
-   function handleToggleFont() {
-      switch (font) {
-         case 'normal':
-            setFont('large');
-            break;
-
-         default:
-            setFont('normal');
-            break;
-      }
-   }
+   }, [location, open, scroll]);
 
    useEffect(() => {
-      document.body.addEventListener('click', (event) => {
-         if (!(event.target instanceof HTMLAnchorElement)) {
-            setShow(false);
-         }
-      });
-   }, []);
+      nav.current?.classList.add('open-details-active');
+      const handle = setTimeout(() => {
+         nav.current?.classList.remove('open-details-active');
+      }, 500);
+
+      if (background) {
+         nav.current?.classList.add('bg-normal');
+      } else {
+         nav.current?.classList.remove('bg-normal');
+      }
+
+      return () => {
+         clearTimeout(handle);
+      };
+   }, [background]);
 
    return (
-      <nav
-         className={`main-nav ${show ? 'show bg-normal' : ''} ${location.pathname !== PATH_INDEX ? 'bg-normal' : ''}`}
-      >
-         <div className="container">
-            <nav className="nav-items">
-               <Link to={PATH_INDEX}>
-                  <h4 className="title">
-                     <FontAwesomeIcon icon={faGraduationCap} /> Homework
-                     <sup> .NET</sup>
-                  </h4>
-               </Link>
-               <a onClick={() => handleTabChange(0)}>Learn</a>
-               <a onClick={() => handleTabChange(1)}>Practice</a>
-               <a onClick={handleToggleTheme}>Theme</a>
-               <a onClick={handleToggleFont}>Font</a>
-            </nav>
-            <nav className="nav-details">{getTab()}</nav>
+      <div className="main-nav">
+         <div ref={nav} className="nav">
+            <div className="container">
+               <div className="nav-items">
+                  <Link to={PATH_INDEX} className="title">
+                     <h4>
+                        <FontAwesomeIcon icon={faGraduationCap} /> Homework
+                        <sup> .NET</sup>
+                     </h4>
+                  </Link>
+                  <a className="nav-link" onClick={() => handleTabChange(0)}>
+                     Learn
+                  </a>
+                  <a className="nav-link" onClick={() => handleTabChange(1)}>
+                     Practice
+                  </a>
+                  <a onClick={() => toggleColor()}>Theme</a>
+                  <a onClick={() => toggleFont()}>Font</a>
+               </div>
+               <div className="nav-details">{renderTabs()}</div>
+            </div>
          </div>
-      </nav>
+      </div>
    );
 }
 

@@ -3,24 +3,19 @@ import { IProgressBar } from '../IO';
 
 import { Text } from '../../../../utils/utilities';
 
-function ProgressCircle({
-   value,
-   size = 3,
-   thickness = 1,
-   showPercentage = true,
-   label,
-}: IProgressBar): React.ReactElement {
+function ProgressCircle({ value, size = 3, showPercentage = true }: IProgressBar): React.ReactElement {
    const [displayValue, setDisplayValue] = useState(0);
 
    useEffect(() => {
       if (isNaN(value) || displayValue >= value) return;
 
-      const timer = setInterval(() => {
+      const timer = setTimeout(() => {
          setDisplayValue(displayValue + 0.01);
+         console.log(displayValue);
       }, 15);
 
       return () => {
-         clearInterval(timer);
+         clearTimeout(timer);
       };
    }, [displayValue]);
 
@@ -28,49 +23,25 @@ function ProgressCircle({
       <div
          className="io progress"
          style={{
-            width: size * 2 + 'em',
-            height: size * 2 + 'em',
+            fontSize: size + 'em',
          }}
       >
          <svg>
+            <circle cx={'1em'} cy={'1em'} r={'.8em'} />
             <circle
-               cx={size - thickness / 2 + 'em'}
-               cy={size - thickness / 2 + 'em'}
-               r={size - thickness / 2 + 'em'}
+               className={value > 0 ? '' : 'hide'}
+               cx={'1em'}
+               cy={'1em'}
+               r={'.8em'}
                style={{
-                  strokeWidth: thickness + 'em',
-                  transform: `translate(${thickness / 2}em,${thickness / 2}em)`,
-                  stroke: displayValue < 1 ? 'var(--btn-normal)' : 'var(--accent-color)',
-               }}
-            />
-            <circle
-               className={displayValue > 0 && displayValue < 1 ? '' : 'hide'}
-               cx={size - thickness / 2 + 'em'}
-               cy={size - thickness / 2 + 'em'}
-               r={size - thickness / 2 + 'em'}
-               style={{
-                  strokeWidth: thickness + 'em',
-                  transform: `translate(${thickness / 2}em,${thickness / 2}em)`,
-                  strokeDasharray: size * 5.25 + 'em',
-                  strokeDashoffset: `calc(${size * 5.25}em - (${size * 5.25}em * ${displayValue}))`,
+                  strokeDashoffset: `calc(5.025em - (5.025em * ${displayValue}))`,
                }}
             />
          </svg>
-         <div
-            className="d-flex flex-column align-items-center justify-content-center"
-            style={{
-               fontSize: thickness + 'em',
-               position: 'absolute',
-               height: '100%',
-               width: '100%',
-               top: 0,
-               left: 0,
-            }}
-         >
-            <span className={showPercentage ? 'text-center' : 'collapse'}>
-               <h5>{label}</h5>
-               {Text.toPercentage(value || 0)}
-            </span>
+         <div className="d-flex flex-column align-items-center justify-content-center label">
+            <div className={showPercentage ? 'text-center' : 'collapse'}>
+               <p>{Text.toPercentage(value || 0)}</p>
+            </div>
          </div>
       </div>
    );

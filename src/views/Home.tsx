@@ -19,40 +19,6 @@ import '../styles/Home.css';
 function Home(): React.ReactElement {
    const user = useContext(userContext);
 
-   function renderLearnCards(): React.ReactElement[] {
-      const out: React.ReactElement[] = [];
-      const courses = getCourses();
-
-      Object.values(ECourseType).forEach((type: string) => {
-         const listItems: React.ReactElement[] = [];
-         const filtered = courses.filter((course: ICourse) => {
-            return course.category === type;
-         });
-
-         filtered.forEach((course: ICourse) => {
-            listItems.push(
-               <li key={uuid()}>
-                  <Link className={course.available ? '' : 'disabled'} to={PATH_LEARN + course.id}>
-                     {course.name}
-                  </Link>
-               </li>,
-            );
-         });
-
-         out.push(
-            <div key={uuid()} className="bg-normal rounded p-1">
-               <h5 className="d-flex justify-content-between">
-                  {type}
-                  <FontAwesomeIcon icon={Icon.byType(type)} />
-               </h5>
-               <ul className="list-unstyled">{listItems}</ul>
-            </div>,
-         );
-      });
-
-      return out;
-   }
-
    function renderPracticeCards(): React.ReactElement[] {
       const out: React.ReactElement[] = [];
       const tests = getTests();
@@ -81,45 +47,77 @@ function Home(): React.ReactElement {
       return out;
    }
 
-   return (
-      <div className="container">
-         <div className="p-1">
-            <header className="home-header">
-               <div>
-                  <div className="my-4">
-                     <h1>Hi {user || 'Visitor'}!</h1>
-                     <h4>What are we learning today?</h4>
-                  </div>
-                  <div className="progress-deck">
-                     {Array.from(getProgressSummary()).map(([key, value]) => {
-                        return (
-                           <div key={uuid()} className="progress-card">
-                              <h5>{key}</h5>
-                              <ProgressCircle value={value} />
-                           </div>
-                        );
-                     })}
-                  </div>
-               </div>
+   function renderLearnCards(): React.ReactElement[] {
+      const out: React.ReactElement[] = [];
+      const courses = getCourses();
 
-               <div className="progress-overview">
-                  <div className="circle bg-light">
-                     <ProgressCircle value={getProgressOverall()} size={17} thickness={5} label="Overall" />
-                  </div>
+      Object.values(ECourseType).forEach((type: string) => {
+         const listItems: React.ReactElement[] = [];
+         const filtered = courses.filter((course: ICourse) => {
+            return course.category === type;
+         });
+
+         filtered.forEach((course: ICourse) => {
+            listItems.push(
+               <li key={uuid()}>
+                  <Link className={course.available ? '' : 'disabled'} to={PATH_LEARN + course.id}>
+                     {course.name}
+                  </Link>
+               </li>,
+            );
+         });
+
+         out.push(
+            <div key={uuid()} className="bg-normal rounded m-0 p-1">
+               <h5 className="d-flex justify-content-between">
+                  {type}
+                  <FontAwesomeIcon icon={Icon.byType(type)} />
+               </h5>
+               <ul className="list-unstyled">{listItems}</ul>
+            </div>,
+         );
+      });
+
+      return out;
+   }
+
+   return (
+      <div className="container p-1">
+         <header className="home-header">
+            <div>
+               <div className="my-4">
+                  <h1>Hi {user || 'Visitor'}!</h1>
+                  <h4>What are we learning today?</h4>
                </div>
-            </header>
-            <hr className="hide" />
-            <section>
-               <h3 className="text-center my-1">Practice</h3>
-               <div className="practice-deck">{renderPracticeCards()}</div>
-            </section>
-            <hr className="hide" />
-            <section>
-               <h3 className="text-center my-1">Learn</h3>
-               <div className="learn-deck">{renderLearnCards()}</div>
-            </section>
-            <hr className="hide" />
-         </div>
+               <div className="progress-deck">
+                  {Array.from(getProgressSummary()).map(([key, value]) => {
+                     return (
+                        <div key={uuid()} className="progress-card">
+                           <h5>{key}</h5>
+                           <ProgressCircle value={value} />
+                        </div>
+                     );
+                  })}
+               </div>
+            </div>
+
+            <div className="progress-overview">
+               <div className="circle bg-light">
+                  <ProgressCircle value={getProgressOverall()} size={16} />
+               </div>
+            </div>
+         </header>
+         <hr className="hide" />
+         <section>
+            <h3 className="text-center my-1">Practice</h3>
+            <div className="deck">{renderPracticeCards()}</div>
+         </section>
+         <hr className="hide" />
+         <section>
+            <h3 className="text-center my-1">Learn</h3>
+            <div className="deck">{renderLearnCards()}</div>
+         </section>
+         <hr className="hide" />
       </div>
    );
 }

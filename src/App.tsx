@@ -35,6 +35,7 @@ import { getCourses } from './data/courses';
 import { updateScore, updateTestScore } from './data/Progress';
 import { getTests } from './data/tests';
 import Preview from './components/Preview';
+import ContextLoader from './data/ContextLoader';
 
 export const userContext = createContext<string>('');
 
@@ -79,18 +80,20 @@ function App(): React.ReactElement {
    return (
       <div className="app">
          <userContext.Provider value={username}>
-            <Routes>
-               <Route path="/" element={<Layout />}>
-                  <Route path={PATH_INDEX} element={<Home />} />
-                  <Route path={PATH_ERROR} element={<Error />} />
-                  <Route path={PATH_LOGIN} element={<Login onLogin={handleLogin} />} />
-                  <Route path={PATH_PROFILE} element={<Profile />} />
-                  <Route path={PATH_LEARN + ':id'} element={<Learn />} />
-                  <Route path={PATH_PRACTICE + ':id'} element={<Practice />} />
-               </Route>
-               <Route path="/" element={<Navigate to={PATH_INDEX} />} />
-               <Route path="*" element={<Navigate to={PATH_ERROR} />} />
-            </Routes>
+            <ContextLoader>
+               <Routes>
+                  <Route path="/" element={<Layout />}>
+                     <Route path={PATH_INDEX} element={<Home />} />
+                     <Route path={PATH_ERROR} element={<Error />} />
+                     <Route path={PATH_LOGIN} element={<Login onLogin={handleLogin} />} />
+                     <Route path={PATH_PROFILE} element={<Profile />} />
+                     <Route path={PATH_LEARN + ':id'} element={<Learn />} />
+                     <Route path={PATH_PRACTICE + ':id'} element={<Practice />} />
+                  </Route>
+                  <Route path="/" element={<Navigate to={PATH_INDEX} />} />
+                  <Route path="*" element={<Navigate to={PATH_ERROR} />} />
+               </Routes>
+            </ContextLoader>
          </userContext.Provider>
 
          <div className="overlay-container">{previewMode ? <Preview /> : ''}</div>

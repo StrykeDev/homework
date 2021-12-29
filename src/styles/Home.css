@@ -1,13 +1,7 @@
-.practice-deck {
+.deck {
    display: grid;
    grid-template-columns: 1fr 1fr 1fr;
-   gap: 1.5em;
-}
-
-.learn-deck {
-   display: grid;
-   grid-template-columns: 1fr 1fr 1fr;
-   gap: 1.5em;
+   gap: 1em;
 }
 
 .progress-deck {
@@ -20,7 +14,6 @@
    display: flex;
    flex-direction: column;
    align-items: center;
-   justify-content: center;
    width: fit-content;
 }
 
@@ -58,25 +51,17 @@
       display: none;
    }
 
-   .practice-deck {
+   .deck {
       grid-template-columns: 1fr 1fr;
    }
 
    .progress-deck .progress-card {
       width: unset;
    }
-
-   .learn-deck {
-      grid-template-columns: 1fr 1fr;
-   }
 }
 
 @media only screen and (max-width: 600px) {
-   .practice-deck {
-      grid-template-columns: 1fr;
-   }
-
-   .learn-deck {
+   .deck {
       grid-template-columns: 1fr;
    }
 }

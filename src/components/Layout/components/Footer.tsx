@@ -5,7 +5,7 @@ import { faGithub } from '@fortawesome/free-brands-svg-icons';
 function Footer(): React.ReactElement {
    const date = new Date();
    return (
-      <footer className="bg-normal color-dark">
+      <div className="bg-normal color-dark">
          <div className="container">
             <div className="footer p-1">
                <p>
@@ -18,7 +18,7 @@ function Footer(): React.ReactElement {
                <p>Barak Attias {date.getFullYear()} &copy; Made In Israel</p>
             </div>
          </div>
-      </footer>
+      </div>
    );
 }
 

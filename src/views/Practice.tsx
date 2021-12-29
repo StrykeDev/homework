@@ -135,80 +135,77 @@ function Practice(): React.ReactElement {
 
    if (testDetails && questions) {
       return (
-         <div className="container">
-            <div className="p-1">
-               <h2>{testDetails.title}</h2>
-               <p>{Text.toParagraph(testDetails.description)}</p>
-               <form onSubmit={handleFormSubmit}>
-                  <fieldset name="test-field" disabled={testScore != -1}>
-                     {testDetails.questions.map((question: ITestQuestion, qIndex: number) => {
-                        const key = uuid();
-                        return (
-                           <fieldset key={key}>
-                              <hr />
-                              <h5>{`${qIndex + 1}. ` + question.question}</h5>
-                              <p>{question.description}</p>
-                              {question.options.map((option: string, oIndex: number) => {
-                                 return (
-                                    <Radio
-                                       key={uuid()}
-                                       name={key}
-                                       value={oIndex}
-                                       checked={questions[qIndex].selected == oIndex}
-                                       onChange={(event) => {
-                                          questions[qIndex].selected = oIndex;
-                                          setQuestions([...questions]);
-                                       }}
-                                       validation={handleValidation(qIndex, oIndex)}
-                                    >
-                                       <pre
-                                          className="language-cs"
-                                          style={{
-                                             maxWidth: '95vw',
-                                             background: 'transparent !important',
-                                          }}
-                                       >
-                                          <code className="bg-black color-white rounded">{option}</code>
-                                       </pre>
-                                    </Radio>
-                                 );
-                              })}
-                              <div className="text-right">
-                                 {question.hint ? (
-                                    <button
-                                       className="btn"
-                                       onClick={(e) => {
-                                          e.currentTarget.innerText = question.hint || '';
-                                          e.currentTarget.disabled = true;
+         <div className="container p-1">
+            <h2>{testDetails.title}</h2>
+            <p>{Text.toParagraph(testDetails.description)}</p>
+            <form onSubmit={handleFormSubmit}>
+               <fieldset name="test-field" disabled={testScore != -1}>
+                  {testDetails.questions.map((question: ITestQuestion, qIndex: number) => {
+                     const key = uuid();
+                     return (
+                        <fieldset key={key}>
+                           <hr />
+                           <h5>{`${qIndex + 1}. ` + question.question}</h5>
+                           <p>{question.description}</p>
+                           {question.options.map((option: string, oIndex: number) => {
+                              return (
+                                 <Radio
+                                    key={uuid()}
+                                    name={key}
+                                    value={oIndex}
+                                    checked={questions[qIndex].selected == oIndex}
+                                    onChange={() => {
+                                       questions[qIndex].selected = oIndex;
+                                       setQuestions([...questions]);
+                                    }}
+                                    validation={handleValidation(qIndex, oIndex)}
+                                 >
+                                    <pre
+                                       className="language-cs"
+                                       style={{
+                                          maxWidth: '95vw',
                                        }}
                                     >
-                                       Help!
-                                    </button>
-                                 ) : (
-                                    ''
-                                 )}
-                              </div>
-                           </fieldset>
-                        );
-                     })}
+                                       <code className="bg-dark color-light rounded">{option}</code>
+                                    </pre>
+                                 </Radio>
+                              );
+                           })}
+                           <div className="text-center">
+                              {question.hint ? (
+                                 <button
+                                    className="btn"
+                                    onClick={(e) => {
+                                       e.currentTarget.innerText = question.hint || '';
+                                       e.currentTarget.disabled = true;
+                                    }}
+                                 >
+                                    Help!
+                                 </button>
+                              ) : (
+                                 ''
+                              )}
+                           </div>
+                        </fieldset>
+                     );
+                  })}
 
-                     <hr />
-                     <div className="text-center">
-                        <div id="test-results" className="text-center my-5 py-5">
-                           {renderScore()}
-                           <input className="btn" type="submit" value="Submit test" />
-                        </div>
+                  <hr />
+                  <div className="text-center">
+                     <div id="test-results" className="text-center my-5 py-5">
+                        {renderScore()}
+                        <input className="btn btn-accent" type="submit" value="Submit test" />
                      </div>
-                     <hr className="hide" />
-                  </fieldset>
-               </form>
-            </div>
+                  </div>
+                  <hr className="hide" />
+               </fieldset>
+            </form>
          </div>
       );
    } else {
       return (
-         <div className="dialog text-center ">
-            <h2 className="my-4">Loading...</h2>
+         <div className="dialog text-center my-4 py-4">
+            <h2>Loading...</h2>
             <p>Please wait.</p>
          </div>
       );

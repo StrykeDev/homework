@@ -24,30 +24,26 @@ function Login({ onLogin }: ILoginProps): React.ReactElement {
    }
 
    return (
-      <div className="my-2 text-center">
-         <div className="mb-2">
-            <h1>
-               Welcome to <span className="title">Homework</span>!
-            </h1>
-            <h3>Lets get started.</h3>
-         </div>
-         <div className="dialog bg-normal rounded">
-            <div className="p-2">
-               <FontAwesomeIcon icon={faUserCircle} size="10x" />
-               <form onSubmit={(event) => handleRegister(event, false)} className="mt-2">
-                  <input
-                     className="text-center"
-                     type="text"
-                     placeholder="What are we going to call you?"
-                     value={inputName}
-                     onChange={(event) => setInputName(event.currentTarget.value)}
-                  />
-                  <input className="btn bg-accent" type="submit" value="Start learning" />
-                  <button className="btn" onClick={(event) => handleRegister(event, true)}>
-                     Take a tour
-                  </button>
-               </form>
-            </div>
+      <div className="container my-4 py-4 text-center">
+         <h1>
+            Welcome to <span className="title">Homework</span>!
+         </h1>
+         <h3>Lets get started.</h3>
+         <div className="dialog my-2 p-1 bg-normal rounded">
+            <FontAwesomeIcon icon={faUserCircle} size="10x" />
+            <form onSubmit={(event) => handleRegister(event, false)} className="mt-2">
+               <input
+                  className="text-center"
+                  type="text"
+                  placeholder="What are we going to call you?"
+                  value={inputName}
+                  onChange={(event) => setInputName(event.currentTarget.value)}
+               />
+               <input className="btn btn-accent" type="submit" value="Start learning" />
+               <button className="btn" onClick={(event) => handleRegister(event, true)}>
+                  Take a tour
+               </button>
+            </form>
          </div>
       </div>
    );

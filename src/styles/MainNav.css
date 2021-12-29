@@ -1,49 +1,73 @@
 .main-nav {
    --nav-height: 4em;
-   --nav-max-height: 25em;
+   --nav-open-height: 25em;
 
-   overflow: hidden;
    height: var(--nav-height);
-   white-space: nowrap;
-   transition: height var(--transition-normal), background-color var(--transition-quick);
 }
 
-.main-nav.show {
-   height: var(--nav-max-height);
+.main-nav .nav {
+   position: fixed;
+   z-index: 100;
+   overflow: hidden;
+   width: 100%;
+   height: var(--nav-height);
 }
 
-.main-nav .nav-items {
+/* Open */
+.main-nav .nav.open-details {
+   height: var(--nav-open-height);
+}
+
+.main-nav .nav.open-details-active {
+   transition-timing-function: ease;
+   transition-duration: var(--transition-normal);
+   transition-property: height, background-color;
+}
+
+/* Items */
+.nav .title {
+   margin-right: 1em;
+   padding: 0;
+}
+
+.nav .nav-items {
    display: flex;
    align-items: center;
    height: var(--nav-height);
+   white-space: nowrap;
 }
 
-.main-nav a {
-   padding: 0 1em;
-   border: none;
+.nav .nav-items a {
+   padding: 0.5em 1em;
    background: transparent;
 }
 
-.main-nav .drop-list {
+/* Details */
+.nav .nav-details {
+   overflow: auto;
+   height: var(--nav-open-height);
+}
+
+.nav .nav-details-items {
    display: grid;
    grid-template-columns: 1fr 1fr 1fr;
    gap: 1em;
    padding: 0 2em;
 }
 
-.main-nav .nav-details {
-   overflow: auto;
-   height: calc(var(--nav-max-height) - var(--nav-height));
-}
-
 @media only screen and (max-width: 900px) {
-   .main-nav .drop-list {
+   .nav .nav-details-items {
       grid-template-columns: 1fr 1fr;
    }
 }
 
 @media only screen and (max-width: 600px) {
-   .main-nav .drop-list {
+   .nav .nav-details-items {
       grid-template-columns: 1fr;
+   }
+
+   .main-nav .nav.open-details,
+   .nav .nav-details {
+      height: 100%;
    }
 }

@@ -11,40 +11,43 @@
    width: 1em;
    height: 1em;
    margin: 0.75em;
-   border: var(--bg-light) solid 0.25em;
+   border: var(--color-btn-light) solid 0.25em;
    border-radius: 50%;
-   background-color: var(--btn-normal);
-   transition: background-color var(--transition-quick);
+   background-color: var(--color-btn-normal);
+   transition: background-color ease var(--transition-quick);
 }
 
 .io.radio input {
    display: none;
 }
 
-.io.radio input:hover ~ .radio-dot {
-   background-color: var(--btn-light);
+.io.radio input:hover ~ .radio-dot,
+.io.radio input:focus-visible ~ .radio-dot {
+   background-color: var(--color-btn-light);
 }
 
 .io.radio input:active ~ .radio-dot,
 .io.radio input:disabled ~ .radio-dot {
-   background-color: var(--btn-dark);
+   background-color: var(--color-btn-dark);
 }
 
 .io.radio input:checked ~ .radio-dot {
-   background-color: var(--accent-color);
+   background-color: var(--color-accent-normal);
 }
 
 .io.radio .radio-dot.valid {
-   background-color: var(--accent-color) !important;
+   background-color: var(--color-accent-normal) !important;
 }
 
 .io.radio .radio-dot.invalid {
-   background-color: var(--danger-color) !important;
+   background-color: var(--color-danger-normal) !important;
 }
 
 /* ProgressCircle */
 .io.progress {
    position: relative;
+   width: 2em;
+   height: 2em;
 }
 
 .io.progress svg {
@@ -54,10 +57,21 @@
 
 .io.progress circle {
    fill: none;
-   stroke: var(--btn-normal);
    stroke-linecap: round;
+   stroke-width: 0.4em;
+   stroke: var(--color-btn-dark);
 }
 
 .io.progress circle:last-child {
-   stroke: var(--accent-color);
+   stroke: var(--color-accent-normal);
+   stroke-dasharray: 5.025em;
+}
+
+.io.progress .label {
+   position: absolute;
+   height: 100%;
+   width: 100%;
+   top: 0;
+   left: 0;
+   font-size: 0.4em;
 }

@@ -14,8 +14,8 @@ function Preview(): React.ReactElement {
 
    return (
       <div className="preview-warning">
-         <h6>Viewing website in preview mode, progress will be lost!</h6>
-         <a className="btn" onClick={handleDisablePreview}>
+         <h6 className="mb-1">Viewing website in preview mode, progress will be lost!</h6>
+         <a className="btn btn-accent" onClick={handleDisablePreview}>
             Disable preview mode
          </a>
       </div>

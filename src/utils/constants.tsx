@@ -1,6 +1,6 @@
 // App
 export const ID = 'com.homework.app';
-export const VERSION = '0.2.2';
+export const VERSION = '0.2.3';
 export const CONTENT = '0.2.1';
 
 // Paths
@@ -19,3 +19,5 @@ export const USERNAME = 'username';
 export const PREVIEW = 'preview';
 export const PROGRESS = 'progress';
 export const TESTS = 'tests';
+export const THEME_COLOR = 'theme.color';
+export const THEME_FONT = 'theme.font';

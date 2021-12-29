@@ -25,12 +25,14 @@ function Login({ onLogin }: ILoginProps): React.ReactElement {
 
    return (
       <div className="container my-4 py-4 text-center">
-         <h1>
+         <h2>
             Welcome to <span className="title">Homework</span>!
-         </h1>
+         </h2>
          <h3>Lets get started.</h3>
          <div className="dialog my-2 p-1 bg-normal rounded">
-            <FontAwesomeIcon icon={faUserCircle} size="10x" />
+            <p>
+               <FontAwesomeIcon icon={faUserCircle} size="10x" />
+            </p>
             <form onSubmit={(event) => handleRegister(event, false)} className="mt-2">
                <input
                   className="text-center"

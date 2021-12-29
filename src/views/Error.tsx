@@ -8,8 +8,8 @@ function Error(): React.ReactElement {
 
    return (
       <div className="dialog text-center my-4 py-4">
-         <h1>Oops...</h1>
-         <h4>Something went wrong!</h4>
+         <h2>¯\_(ツ)_/¯</h2>
+         <h3>Something went wrong.</h3>
          <button className="btn m-1" onClick={() => navigator(PATH_INDEX)}>
             Go back to safety
          </button>

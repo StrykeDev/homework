@@ -160,32 +160,28 @@ function Practice(): React.ReactElement {
                                     }}
                                     validation={handleValidation(qIndex, oIndex)}
                                  >
-                                    <pre
-                                       className="language-cs"
-                                       style={{
-                                          maxWidth: '95vw',
-                                       }}
-                                    >
-                                       <code className="bg-dark color-light rounded">{option}</code>
+                                    <pre className="language-cs">
+                                       <code>{option}</code>
                                     </pre>
                                  </Radio>
                               );
                            })}
-                           <div className="text-center">
+                           {/* <div className="text-center">
                               {question.hint ? (
                                  <button
                                     className="btn"
+                                    style={{ textTransform: 'none' }}
                                     onClick={(e) => {
                                        e.currentTarget.innerText = question.hint || '';
                                        e.currentTarget.disabled = true;
                                     }}
                                  >
-                                    Help!
+                                    Hint
                                  </button>
                               ) : (
                                  ''
                               )}
-                           </div>
+                           </div> */}
                         </fieldset>
                      );
                   })}

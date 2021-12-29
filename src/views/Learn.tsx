@@ -48,8 +48,8 @@ function Learn(): React.ReactElement {
                      <p>{Text.toParagraph(section.description)}</p>
 
                      {section.example ? (
-                        <pre className="language-cs" style={{ maxWidth: '95vw' }}>
-                           <code className="bg-normal color-light rounded">{section.example}</code>
+                        <pre className="language-cs">
+                           <code>{section.example}</code>
                         </pre>
                      ) : (
                         ''

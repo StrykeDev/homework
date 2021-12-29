@@ -3,14 +3,14 @@
    --nav-open-height: 25em;
 
    height: var(--nav-height);
+   z-index: 100;
 }
 
 .main-nav .nav {
    position: fixed;
-   z-index: 100;
-   overflow: hidden;
    width: 100%;
    height: var(--nav-height);
+   overflow: hidden;
 }
 
 /* Open */
@@ -37,6 +37,14 @@
    white-space: nowrap;
 }
 
+.nav .nav-link * {
+   pointer-events: none;
+}
+
+.nav .nav-menu {
+   display: none;
+}
+
 .nav .nav-items a {
    padding: 0.5em 1em;
    background: transparent;
@@ -45,7 +53,7 @@
 /* Details */
 .nav .nav-details {
    overflow: auto;
-   height: var(--nav-open-height);
+   height: calc(var(--nav-open-height) - var(--nav-height));
 }
 
 .nav .nav-details-items {
@@ -66,8 +74,19 @@
       grid-template-columns: 1fr;
    }
 
-   .main-nav .nav.open-details,
+   .main-nav .nav.open-details {
+      height: 100vh;
+   }
+
    .nav .nav-details {
-      height: 100%;
+      height: calc(100vh - var(--nav-height));
+   }
+
+   .nav .nav-link {
+      display: none;
+   }
+
+   .nav .nav-menu {
+      display: block;
    }
 }

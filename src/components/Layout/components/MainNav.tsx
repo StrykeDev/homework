@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useRef, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { v4 as uuid } from 'uuid';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faGraduationCap } from '@fortawesome/free-solid-svg-icons';
+import { faBars, faBrush, faFont, faGraduationCap, faPaintBrush } from '@fortawesome/free-solid-svg-icons';
 
 import { PATH_INDEX, PATH_LEARN, PATH_PRACTICE } from '../../../utils/constants';
 
@@ -19,7 +19,7 @@ function MainNav(): React.ReactElement {
    const [background, setBackground] = useState(true);
    const [scroll, setScroll] = useState(window.scrollY > 10);
    const [open, setOpen] = useState(false);
-   const [tab, setTab] = useState(-1);
+   const [tab, setTab] = useState(-2);
 
    useEffect(() => {
       document.body.addEventListener('click', (event) => {
@@ -34,6 +34,10 @@ function MainNav(): React.ReactElement {
 
       window.addEventListener('scroll', () => {
          setScroll(window.scrollY > 10);
+      });
+
+      window.addEventListener('resize', () => {
+         setOpen(false);
       });
    }, []);
 
@@ -102,6 +106,35 @@ function MainNav(): React.ReactElement {
 
    function renderTabs(): React.ReactElement {
       switch (tab) {
+         case -1:
+            return (
+               <div className="nav-details-items">
+                  <div className="d-flex justify-content-center">
+                     <a className="text-center mx-2" onClick={() => toggleColor()}>
+                        <h2>
+                           <FontAwesomeIcon icon={faPaintBrush} />
+                        </h2>
+                        <p>Theme</p>
+                     </a>
+                     <a className="text-center mx-2" onClick={() => toggleFont()}>
+                        <h2>
+                           <FontAwesomeIcon icon={faFont} />
+                        </h2>
+                        <p>Font</p>
+                     </a>
+                  </div>
+                  <hr className="my-2" />
+                  <div>
+                     <h3 className="text-center">Learn</h3>
+                     {renderLearnTab()}
+                  </div>
+                  <hr className="my-2" />
+                  <div>
+                     <h3 className="text-center">Practice</h3>
+                     {renderPracticeTab()}
+                  </div>
+               </div>
+            );
          case 0:
             return <div className="nav-details-items">{renderLearnTab()}</div>;
          case 1:
@@ -183,8 +216,17 @@ function MainNav(): React.ReactElement {
                   <a className="nav-link" onClick={() => handleTabChange(1)}>
                      Practice
                   </a>
-                  <a onClick={() => toggleColor()}>Theme</a>
-                  <a onClick={() => toggleFont()}>Font</a>
+                  <a className="nav-link" onClick={() => toggleColor()}>
+                     Theme
+                  </a>
+                  <a className="nav-link" onClick={() => toggleFont()}>
+                     Font
+                  </a>
+                  <a className="nav-link nav-menu ml-auto" onClick={() => handleTabChange(-1)}>
+                     <h4>
+                        <FontAwesomeIcon icon={faBars} />
+                     </h4>
+                  </a>
                </div>
                <div className="nav-details">{renderTabs()}</div>
             </div>

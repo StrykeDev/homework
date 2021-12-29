@@ -32,7 +32,7 @@ import Practice from './views/Practice';
 import './styles/App.css';
 import Layout from './components/Layout/Layout';
 import { getCourses } from './data/courses';
-import { updateScore, updateTestScore } from './data/Progress';
+import { updateScore, updateTestScore } from './data/progress';
 import { getTests } from './data/tests';
 import Preview from './components/Preview';
 import ContextLoader from './data/ContextLoader';

@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { faSadTear, faFrown, faSmile, faSmileBeam } from '@fortawesome/free-solid-svg-icons';
 
-import { getScore, updateScore } from '../../data/Progress';
+import { getScore, updateScore } from '../../data/progress';
 
 const ICONS = [faSadTear, faFrown, faSmile, faSmileBeam];
 

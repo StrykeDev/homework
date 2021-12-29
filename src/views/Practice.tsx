@@ -14,7 +14,7 @@ import { PATH_ERROR } from '../utils/constants';
 import { Text } from '../utils/utilities';
 
 import { ITestQuestion, getTestDetails, ITestDetails } from '../data/tests';
-import { updateScore, updateTestScore } from '../data/Progress';
+import { updateScore, updateTestScore } from '../data/progress';
 
 import { Radio } from '../components/forms/IO';
 

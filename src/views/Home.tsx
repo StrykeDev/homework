@@ -10,7 +10,7 @@ import { Icon } from '../utils/utilities';
 
 import { ECourseType, getCourses, ICourse } from '../data/courses';
 import { getTests } from '../data/tests';
-import { getProgressOverall, getProgressSummary, getTestScore } from '../data/Progress';
+import { getProgressOverall, getProgressSummary, getTestScore } from '../data/progress';
 
 import { userContext } from '../App';
 

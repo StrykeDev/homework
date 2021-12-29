@@ -65,6 +65,7 @@ body {
    --transition-slow: 500ms;
 
    overflow: auto scroll;
+   box-sizing: border-box;
    width: calc(100vw - 0.75em);
    height: 100vh;
    margin: 0;
@@ -75,7 +76,6 @@ body {
    font-family: Roboto, sans-serif;
    user-select: none;
    scroll-behavior: smooth;
-   box-sizing: border-box;
 }
 
 body[data-theme-color='light'] {
@@ -148,12 +148,12 @@ article {
 }
 
 pre {
-   padding: 0.1em;
+   display: block;
    overflow: auto;
-   color: var(--color-text-light);
+   padding: 0.1em;
    border-radius: var(--border-radius);
    background-color: var(--color-btn-dark);
-   display: block;
+   color: var(--color-text-light);
 }
 
 code {
@@ -206,8 +206,8 @@ h6 {
 
 p {
    margin: 0.25em 0;
-   font-size: 1em;
    color: var(--color-text-normal);
+   font-size: 1em;
 }
 
 sup,
@@ -459,11 +459,11 @@ button,
 }
 
 hr {
-   margin: 4em 0;
-   border-radius: var(--border-radius);
    height: 2px;
-   background-color: var(--color-btn-normal);
+   margin: 4em 0;
    border: none;
+   border-radius: var(--border-radius);
+   background-color: var(--color-btn-normal);
 }
 
 .rounded {

@@ -2,15 +2,15 @@
    --nav-height: 4em;
    --nav-open-height: 25em;
 
-   height: var(--nav-height);
    z-index: 100;
+   height: var(--nav-height);
 }
 
 .main-nav .nav {
    position: fixed;
+   overflow: hidden;
    width: 100%;
    height: var(--nav-height);
-   overflow: hidden;
 }
 
 /* Open */

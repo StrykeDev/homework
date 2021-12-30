@@ -6,8 +6,12 @@ import MainNav from './components/MainNav';
 import '../../styles/Layout.css';
 import { userContext } from '../../App';
 import { PATH_INDEX, PATH_LOGIN } from '../../utils/constants';
+import Preview from './components/Preview';
 
-function Layout(): React.ReactElement {
+interface ILayoutProps {
+   preview: boolean;
+}
+function Layout({ preview }: ILayoutProps): React.ReactElement {
    const user = useContext(userContext);
    const location = useLocation();
    const navigate = useNavigate();
@@ -27,8 +31,11 @@ function Layout(): React.ReactElement {
    return (
       <div className="layout">
          <MainNav />
-         <Outlet />
+         <main>
+            <Outlet />
+         </main>
          <Footer />
+         <div className="overlay-container">{preview ? <Preview /> : ''}</div>
       </div>
    );
 }

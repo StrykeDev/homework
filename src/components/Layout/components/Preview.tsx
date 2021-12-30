@@ -1,8 +1,6 @@
 import React from 'react';
-
-import { LocalStorage } from '../services/LocalStorage';
-
-import { PATH_INDEX, PREVIEW, PROGRESS, TESTS } from '../utils/constants';
+import { LocalStorage } from '../../../services/LocalStorage';
+import { PREVIEW, PROGRESS, TESTS, PATH_INDEX } from '../../../utils/constants';
 
 function Preview(): React.ReactElement {
    function handleDisablePreview() {
@@ -14,9 +12,9 @@ function Preview(): React.ReactElement {
 
    return (
       <div className="preview-warning">
-         <h6 className="mb-1">Viewing website in preview mode, progress will be lost!</h6>
-         <a className="btn btn-accent" onClick={handleDisablePreview}>
-            Disable preview mode
+         <h6 className="mb-1 color-white">Viewing website in preview mode, progress will be lost!</h6>
+         <a className="btn btn-dark" onClick={handleDisablePreview}>
+            Disable preview mode to start learning
          </a>
       </div>
    );

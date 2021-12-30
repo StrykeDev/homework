@@ -33,7 +33,7 @@ function Login({ onLogin }: ILoginProps): React.ReactElement {
             <p>
                <FontAwesomeIcon icon={faUserCircle} size="10x" />
             </p>
-            <form onSubmit={(event) => handleRegister(event, false)} className="mt-2">
+            <form onSubmit={(event) => handleRegister(event, true)} className="mt-2">
                <input
                   className="text-center"
                   type="text"
@@ -42,9 +42,6 @@ function Login({ onLogin }: ILoginProps): React.ReactElement {
                   onChange={(event) => setInputName(event.currentTarget.value)}
                />
                <input className="btn btn-accent" type="submit" value="Start learning" />
-               <button className="btn" onClick={(event) => handleRegister(event, true)}>
-                  Take a tour
-               </button>
             </form>
          </div>
       </div>

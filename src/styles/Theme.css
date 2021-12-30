@@ -1,8 +1,8 @@
 ::-webkit-scrollbar,
 ::-webkit-scrollbar-corner,
 ::-webkit-scrollbar-track {
-   width: 0.75em;
-   height: 0.75em;
+   width: var(--scrollbar-width);
+   height: var(--scrollbar-width);
    margin: 1em;
 }
 
@@ -63,12 +63,12 @@ body {
    --transition-quick: 250ms;
    --transition-normal: 375ms;
    --transition-slow: 500ms;
+   --scrollbar-width: 0.75em;
 
-   overflow: auto scroll;
+   overflow: hidden scroll;
    box-sizing: border-box;
-   width: calc(100vw - 0.75em);
-   height: 100vh;
-   margin: 0;
+   margin: 0 !important;
+   padding: 0 !important;
    background-color: var(--color-bg-dark);
    color: var(--color-text-normal);
    font-weight: 400;
@@ -130,7 +130,6 @@ article {
 }
 
 .container {
-   display: block;
    box-sizing: border-box;
    width: 100%;
    max-width: 1200px !important;
@@ -139,7 +138,6 @@ article {
 }
 
 .dialog {
-   display: block;
    box-sizing: border-box;
    width: 100%;
    max-width: 400px !important;

@@ -34,7 +34,6 @@ import Layout from './components/Layout/Layout';
 import { getCourses } from './data/courses';
 import { updateScore, updateTestScore } from './data/progress';
 import { getTests } from './data/tests';
-import Preview from './components/Preview';
 import ContextLoader from './data/ContextLoader';
 
 export const userContext = createContext<string>('');
@@ -82,7 +81,7 @@ function App(): React.ReactElement {
          <userContext.Provider value={username}>
             <ContextLoader>
                <Routes>
-                  <Route path="/" element={<Layout />}>
+                  <Route path="/" element={<Layout preview={previewMode} />}>
                      <Route path={PATH_INDEX} element={<Home />} />
                      <Route path={PATH_ERROR} element={<Error />} />
                      <Route path={PATH_LOGIN} element={<Login onLogin={handleLogin} />} />
@@ -95,8 +94,6 @@ function App(): React.ReactElement {
                </Routes>
             </ContextLoader>
          </userContext.Provider>
-
-         <div className="overlay-container">{previewMode ? <Preview /> : ''}</div>
       </div>
    );
 }

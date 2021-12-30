@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useRef, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { v4 as uuid } from 'uuid';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBars, faBrush, faFont, faGraduationCap, faPaintBrush } from '@fortawesome/free-solid-svg-icons';
+import { faBars, faFont, faGraduationCap, faPaintBrush } from '@fortawesome/free-solid-svg-icons';
 
 import { PATH_INDEX, PATH_LEARN, PATH_PRACTICE } from '../../../utils/constants';
 
@@ -110,13 +110,13 @@ function MainNav(): React.ReactElement {
             return (
                <div className="nav-details-items">
                   <div className="d-flex justify-content-center">
-                     <a className="text-center mx-2" onClick={() => toggleColor()}>
+                     <a className="nav-link text-center px-1 mx-1" onClick={() => toggleColor()}>
                         <h2>
                            <FontAwesomeIcon icon={faPaintBrush} />
                         </h2>
                         <p>Theme</p>
                      </a>
-                     <a className="text-center mx-2" onClick={() => toggleFont()}>
+                     <a className="nav-link text-center px-1 mx-1" onClick={() => toggleFont()}>
                         <h2>
                            <FontAwesomeIcon icon={faFont} />
                         </h2>
@@ -157,16 +157,16 @@ function MainNav(): React.ReactElement {
    const nav = useRef<HTMLDivElement>(null);
 
    useEffect(() => {
-      nav.current?.classList.add('open-details-active');
+      nav.current?.classList.add('open-active');
 
       const handle = setTimeout(() => {
-         nav.current?.classList.remove('open-details-active');
+         nav.current?.classList.remove('open-active');
       }, 500);
 
       if (open) {
-         nav.current?.classList.add('open-details');
+         nav.current?.classList.add('open');
       } else {
-         nav.current?.classList.remove('open-details');
+         nav.current?.classList.remove('open');
       }
 
       return () => {
@@ -183,9 +183,9 @@ function MainNav(): React.ReactElement {
    }, [location, open, scroll]);
 
    useEffect(() => {
-      nav.current?.classList.add('open-details-active');
+      nav.current?.classList.add('open-active');
       const handle = setTimeout(() => {
-         nav.current?.classList.remove('open-details-active');
+         nav.current?.classList.remove('open-active');
       }, 500);
 
       if (background) {
@@ -200,38 +200,36 @@ function MainNav(): React.ReactElement {
    }, [background]);
 
    return (
-      <div className="main-nav">
+      <nav className="main-nav">
          <div ref={nav} className="nav">
-            <div className="container">
-               <div className="nav-items">
-                  <Link to={PATH_INDEX} className="title">
-                     <h4>
-                        <FontAwesomeIcon icon={faGraduationCap} /> Homework
-                        <sup> .NET</sup>
-                     </h4>
-                  </Link>
-                  <a className="nav-link" onClick={() => handleTabChange(0)}>
-                     Learn
-                  </a>
-                  <a className="nav-link" onClick={() => handleTabChange(1)}>
-                     Practice
-                  </a>
-                  <a className="nav-link" onClick={() => toggleColor()}>
-                     Theme
-                  </a>
-                  <a className="nav-link" onClick={() => toggleFont()}>
-                     Font
-                  </a>
-                  <a className="nav-link nav-menu ml-auto" onClick={() => handleTabChange(-1)}>
-                     <h4>
-                        <FontAwesomeIcon icon={faBars} />
-                     </h4>
-                  </a>
-               </div>
-               <div className="nav-details">{renderTabs()}</div>
+            <div className="container nav-items">
+               <Link to={PATH_INDEX} className="nav-title">
+                  <h4>
+                     <FontAwesomeIcon icon={faGraduationCap} /> Homework
+                     <sup> .NET</sup>
+                  </h4>
+               </Link>
+               <a className="nav-item nav-link" onClick={() => handleTabChange(0)}>
+                  Learn
+               </a>
+               <a className="nav-item nav-link" onClick={() => handleTabChange(1)}>
+                  Practice
+               </a>
+               <a className="nav-item nav-link" onClick={() => toggleColor()}>
+                  Theme
+               </a>
+               <a className="nav-item nav-link" onClick={() => toggleFont()}>
+                  Font
+               </a>
+               <a className="nav-menu nav-link" onClick={() => handleTabChange(-1)}>
+                  <h4>
+                     <FontAwesomeIcon icon={faBars} />
+                  </h4>
+               </a>
             </div>
+            <div className="container nav-details">{renderTabs()}</div>
          </div>
-      </div>
+      </nav>
    );
 }
 

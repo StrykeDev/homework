@@ -34,7 +34,7 @@ import Layout from './components/Layout/Layout';
 import { getCourses } from './data/courses';
 import { updateScore, updateTestScore } from './data/progress';
 import { getTests } from './data/tests';
-import ContextLoader from './data/ContextLoader';
+import ThemeContext from './data/ThemeContext';
 
 export const userContext = createContext<string>('');
 
@@ -79,7 +79,7 @@ function App(): React.ReactElement {
    return (
       <div className="app">
          <userContext.Provider value={username}>
-            <ContextLoader>
+            <ThemeContext>
                <Routes>
                   <Route path="/" element={<Layout preview={previewMode} />}>
                      <Route path={PATH_INDEX} element={<Home />} />
@@ -92,7 +92,7 @@ function App(): React.ReactElement {
                   <Route path="/" element={<Navigate to={PATH_INDEX} />} />
                   <Route path="*" element={<Navigate to={PATH_ERROR} />} />
                </Routes>
-            </ContextLoader>
+            </ThemeContext>
          </userContext.Provider>
       </div>
    );

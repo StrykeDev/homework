@@ -3,7 +3,10 @@ import React, { createContext, useEffect, useState } from 'react';
 import { LocalStorage } from '../services/LocalStorage';
 
 import { THEME_COLOR, THEME_FONT } from '../utils/constants';
-import { IContextProps } from './ContextLoader';
+
+export interface ThemeProps {
+   children: React.ReactElement;
+}
 
 export enum EThemeColor {
    Dark = 'dark',
@@ -18,7 +21,7 @@ export enum EThemeFont {
 export const ThemeColorContext = createContext<any>(null);
 export const ThemeFontContext = createContext<any>(null);
 
-function ThemeContext({ children }: IContextProps): React.ReactElement {
+function ThemeContext({ children }: ThemeProps): React.ReactElement {
    const [color, setColor] = useState(LocalStorage.getItem(THEME_COLOR) || EThemeColor.Dark);
    const [font, setFont] = useState(LocalStorage.getItem(THEME_FONT) || EThemeFont.Normal);
 

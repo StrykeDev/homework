@@ -5,20 +5,20 @@ import { faUserCircle } from '@fortawesome/free-solid-svg-icons';
 
 import { PATH_INDEX } from '../utils/constants';
 
-interface ILoginProps {
+interface LoginProps {
    onLogin: (username: string, preview?: boolean) => void;
 }
 
-function Login({ onLogin }: ILoginProps): React.ReactElement {
+function Login({ onLogin }: LoginProps): React.ReactElement {
    const [inputName, setInputName] = useState('');
    const navigate = useNavigate();
 
-   function handleRegister(event: any, preview: boolean): void {
+   function handleRegister(event: any, preview = true): void {
       event.preventDefault();
       if (inputName) {
          const name = inputName.split(' ')[0];
-         const displayName = name.charAt(0).toUpperCase() + name.slice(1).toLowerCase();
-         onLogin(displayName, preview);
+         const firstName = name.charAt(0).toUpperCase() + name.slice(1).toLowerCase();
+         onLogin(firstName, preview);
          navigate(PATH_INDEX);
       }
    }
@@ -33,13 +33,14 @@ function Login({ onLogin }: ILoginProps): React.ReactElement {
             <p>
                <FontAwesomeIcon icon={faUserCircle} size="10x" />
             </p>
-            <form onSubmit={(event) => handleRegister(event, true)} className="mt-2">
+            <form onSubmit={(event) => handleRegister(event)} className="mt-2">
                <input
                   className="text-center"
                   type="text"
                   placeholder="What are we going to call you?"
                   value={inputName}
                   onChange={(event) => setInputName(event.currentTarget.value)}
+                  required
                />
                <input className="btn btn-accent" type="submit" value="Start learning" />
             </form>

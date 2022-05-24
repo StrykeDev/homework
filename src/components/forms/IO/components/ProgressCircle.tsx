@@ -11,7 +11,6 @@ function ProgressCircle({ value, size = 3, showPercentage = true }: IProgressBar
 
       const timer = setTimeout(() => {
          setDisplayValue(displayValue + 0.01);
-         console.log(displayValue);
       }, 15);
 
       return () => {

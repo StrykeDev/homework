@@ -32,15 +32,17 @@ const courses: ICourseDetails[] = [
    {
       id: 'primitive-types',
       category: ECourseType.Types,
-      name: 'Primitive',
+      name: 'Primitives',
       available: true,
       title: 'Primitive types',
-      description: `Primitive types are the most basic types.`,
+      description: `Primitive types are the most basic types there is, they are the building blocks of almost everything.
+      They are "pass by value", meaning that when passing a primitive type the returned value will be the actual value, unlike "pass by reference" which will return the address in memory.`,
       sections: [
          {
-            title: 'bool',
-            description: `bool(Boolean) is the smallest type, it has only 2 possible states: True or False.
-               Booleans are mainly used in comparison operations.`,
+            title: 'Boolean',
+            description: `Booleans are mainly used in comparison operations.
+
+               bool - takes 2 bytes of memory, it has only 2 possible values: true or false.`,
             example: `// Declaration and usage
    bool isOnline = true;
 
@@ -49,49 +51,138 @@ const courses: ICourseDetails[] = [
    }`,
          },
          {
-            title: `int, float and double`,
-            description: `int(integer), float, and double are numerical types, they represent numbers.
+            title: `Numerical`,
+            description: `int and double are the main numerical types, they represent numbers.
                Each one has it's use case, typically we want to use the smallest type possible.
       
-               int is the smallest one, it can hold only whole numbers.
-               Mainly use for counting stuff, like days, age, number of objects, indexes, etc..
+               int - uses 4 bytes of memory, it can hold only whole numbers.
+               Mainly use for counting stuff.
       
-               float is in the middle, it can hold decimal numbers, it's much lighter than double but less accurate.
-               Mainly use for stuff that doesn't require great precision and simple math.
-               Input number MUST use one of this formats: 0f, 0.0f
-      
-               double is the largest one, it can hold decimal numbers, it's heavy but accurate.
-               Mainly use for stuff that requires great precision like balance and currency.`,
-            example: `// Declaration
-   int age = 30;
-   float distance = 450.562f;
-   double balance1 = 1115313.315134d; // The d at the end is optional`,
-         },
-         {
-            title: `char and string`,
-            description: `char and strings types used for representing letter or text.
-      
-               char can hold only 1 letter which make it the smaller one.
-               Mainly used for storing letters and symbols, useful when dealing with ASCII.
-               Input letter MUST use this format: 'x'
+               double - uses 8 bytes of memory, it can hold decimal numbers.
+               Mainly use for stuff that requires great precision.
+            
+
+               There are also less common numerical types:
+
+               short - Same as int but smaller, uses 2 bytes.
+
+               long - Same as int but larger, can use upto 8 bytes. (4 bytes on x86 systems, 8 bytes on x64 systems)
+
+               float - Same as double but smaller, uses 4 bytes of memory.
+
+               decimal - Same as double but uses base 10 and use 16 bytes of memory.
+               It store the values in the same way that we humans use them, for example 0.5 is 0.1 in base 2 and 0.5 in base 10.
+               Mainly use for communicating between hardware devices and for currency.
                
-               string can hold from 1 letter to full sentences, it's much larger and it grow by the amount of text that it's storing.
-               Mainly used for text.
-               Input text MUST use this format: "Text"`,
+               char - Same as int but much smaller, uses 1 byte.
+               It store whole numbers which represent ASCII characters.
+               Mainly used for storing single letter.`,
+
             example: `// Declaration
-   char theLetterB = 'B';
-   string message = "Oh no, we are out of milk!";`,
+   int      cities   = 4522;
+   short    age      = 32;
+   long     serial   = 42489434l;\t// The l at the end is mandatory
+
+   float    ms       = 450.562f;\t// The F at the end is mandatory
+   double   distance = 4135.33d;\t// The d at the end is optional
+
+   decimal  balance  = 4.0m;\t\t// The M at the end is mandatory
+   char     letter   = 'x';\t\t// The '' mandatory`,
          },
       ],
    },
    {
-      id: 'complex-types',
+      id: 'reference-types',
       category: ECourseType.Types,
-      name: 'Complex',
-      available: false,
-      title: 'Complex types',
-      description: `This course is under construction.`,
-      sections: [],
+      name: 'Reference',
+      available: true,
+      title: 'Reference types',
+      description: `Reference types are complex types that are built out of primitive types.
+      They are "pass by reference", meaning that when passing a reference type the returned value will be the address in memory (reference) of the original value, unlike "pass by value" which will return the actual value.`,
+      sections: [
+         {
+            title: 'String',
+            description: `String are a collection of chars, they manly used for human readable text.`,
+            example: `// Declaration and usage
+   bool message = "Hello World!";\t// The "" is mandatory
+   Console.WriteLine(message);\t\t// Output: Hello World!`,
+         },
+         {
+            title: 'Class',
+            description: `Class is a collection of methods(Functions) and properties(Variables)`,
+            example: `// Declaration
+   class MyClass {
+
+      // This is a private property accessible only to this class
+      private int myInt;
+
+      // This is a public property which can be read and write by anything, Highly not recommended!
+      public string myString;
+
+      // This is a constructor method
+      public MyClass() {
+         this.Zero();
+         this.myString = "nothing";
+      }
+
+      // This is a constructor method that takes arguments
+      public MyClass(int number, string msg) {
+         this.myInt = number;
+         this.myString = msg;
+      }
+
+      // This is a private method accessible only to this class
+      private void Zero() {
+         myInt = 0;
+      }
+
+      // This is a public method which can be called by anything
+      public int GetInt() {
+         return myInt;
+      }
+   }`,
+         },
+         {
+            title: 'Array',
+            description: `Array is a fixed size collection of values of the same type.`,
+            example: `// Declaration
+   // Both [] after the type is mandatory, the number inside the second [] represent the size of the array and it's also mandatory
+   int[] numbersA = new int[3];     // numbersA = 0, 0, 0
+
+   // The optical {} allow us to initialize the array with values
+   // When initializing an array with values it's not mandatory to specify the size of the array but its highly recommended.
+   int[] numbersB = new int[3] { 1, 2, 3 };     // numbersB = 1, 2, 3
+
+   // This example is the same as the one above it, though it's not recommended
+   int[] numbersC = { 1, 2, 3 };    // numbersC = 1, 2, 3
+
+   // In this example both arrays (A and D) will be the exact same, changing one will change the other
+   int[] numbersD = numbersA;    // numbersD = numbersA = 0, 0, 0
+
+   double[] moreNumbersA = new double[2];                // moreNumbersA = 0, 0
+   double[] moreNumbersB = new double[2] { 0.1, 0.2 };   // moreNumbersB = 0.1, 0.2
+   char[] charsA = new char[3];                          // charsA = '0', '0', '0'
+   char[] charsB = new char[3] { 'A', 'B', 'C' };        // charsB = 'A', 'B', 'C'
+   MyClass[] myClasses = new MyClass[3];                 // myClasses = null, null, null (The classes need to be initialize separately)
+
+// Usage
+   Console.WriteLine(numbersB[1]);     // Output: 2
+   Console.WriteLine(moreNumbersB[0]); // Output: 0.1
+   Console.WriteLine(charsB[2]);       // Output: C
+
+   // MyClass implementation:
+   // class MyClass {
+   //    PrintHello() {
+   //       Console.WriteLine("Hello");
+   //    }  
+   // }
+   myClasses[0] = new MyClass();
+   myClasses[0].PrintHello();          // Output: Hello
+
+   myClasses[1].PrintHello();          // Error: Class MyClass isn't initialized, PrintHello doesn't exist
+   `,
+         },
+      ],
    },
    {
       id: 'math-operators',
@@ -105,8 +196,6 @@ const courses: ICourseDetails[] = [
             title: 'Basic math operators',
             description: `Their soul purpose is to do basic math operations.`,
             example: `// Usage
-   double result = 0;
-   
    result = 5 + 10;\t// result = 15
    result = 5 - 10;\t// result = -5
    result = 5 * 10;\t// result = 50
@@ -118,8 +207,7 @@ const courses: ICourseDetails[] = [
             description: `Those operators work the same as the basic ones, the only different is that they use the variable value and then set the variable value to the result.
             Essentially "x += y" is the same as "x = x + y".`,
             example: `// Usage
-   double result = 10;
-   
+   double result = 10;\t// This value will be used in the following examples
    result += 5;\t\t// result = 15
    result -= 5;\t\t// result = 5
    result *= 5;\t\t// result = 50

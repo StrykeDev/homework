@@ -1,7 +1,7 @@
 // App
 export const ID = 'com.homework.app';
 export const VERSION = '0.2.5';
-export const CONTENT = '0.2.1';
+export const CONTENT = '0.2.2';
 
 // Paths
 export const PATH_INDEX = '/homework';
